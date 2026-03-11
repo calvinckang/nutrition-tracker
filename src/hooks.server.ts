@@ -18,6 +18,13 @@ function isAppPath(pathname: string) {
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
+	const pathname = event.url.pathname;
+
+	// Let Better Auth handle its API routes first (avoids 404 when handler runs after our logic)
+	if (pathname.startsWith('/api/auth')) {
+		return svelteKitHandler({ event, resolve, auth, building });
+	}
+
 	const session = await auth.api.getSession({ headers: event.request.headers });
 	if (session) {
 		event.locals.session = session.session;
@@ -29,7 +36,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.role = (row?.role as 'admin' | 'user') ?? 'user';
 	}
 
-	const pathname = event.url.pathname;
 	if (session && isAuthPath(pathname)) throw redirect(302, '/');
 	if (!session && isAppPath(pathname)) throw redirect(302, '/sign-in');
 

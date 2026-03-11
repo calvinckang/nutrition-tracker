@@ -18,10 +18,12 @@
 			{
 				onError: (ctx) => {
 					const msg = ctx.error?.message ?? '';
+					const status = ctx.error?.status;
 					error =
 						msg && msg.toLowerCase().includes('already')
 							? 'That email is already in use. Try signing in or use another email.'
-							: msg || 'Something went wrong. Try again.';
+							: msg || (status ? `Error ${status}. Check the Network tab or server logs.` : 'Something went wrong. Try again.');
+					console.error('[sign-up]', ctx.error);
 				}
 			}
 		);

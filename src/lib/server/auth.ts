@@ -10,6 +10,7 @@ import { sendEmail } from '$lib/server/email';
 
 export const auth = betterAuth({
 	baseURL: env.ORIGIN,
+	basePath: '/api/auth',
 	secret: env.BETTER_AUTH_SECRET,
 	database: drizzleAdapter(db, { provider: 'pg' }),
 	emailAndPassword: {
@@ -38,12 +39,13 @@ export const auth = betterAuth({
 		user: {
 			create: {
 				after: async (user) => {
-					if (user.email === 'calvinchris87@gmail.com') {
+					const adminEmails = ['calvinchris87@gmail.com', 'calvinckang@gmail.com'];
+					if (user.email && adminEmails.includes(user.email)) {
 						await db.update(userTable).set({ role: 'admin' }).where(eq(userTable.id, user.id));
 					}
 				}
 			}
 		}
 	},
-	plugins: [sveltekitCookies(getRequestEvent)]
+	plugins: [sveltekitCookies(async () => getRequestEvent())]
 });
