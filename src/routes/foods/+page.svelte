@@ -156,8 +156,10 @@
 	}
 	.fab-link {
 		position: fixed;
-		right: 16px;
-		bottom: 80px;
+		/* Stay inside the centered 600px app shell on wide screens, and 16px from the edge on small screens */
+		right: max(16px, calc((100vw - 600px) / 2 + 16px));
+		/* Sit comfortably above the bottom nav */
+		bottom: 96px;
 		text-decoration: none;
 		color: inherit;
 	}

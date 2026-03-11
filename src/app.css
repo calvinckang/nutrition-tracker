@@ -1,6 +1,46 @@
-/* Global styles and theme. Theme is applied via data-theme on html (set in app.html). */
+/* Global styles, theme, and typography. Theme is applied via data-theme on html (set in app.html). */
 :root {
 	color-scheme: light dark;
+
+	/* Google Sans–style font stack (uses local "Google Sans" if available, else system). */
+	--font-sans: 'Google Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+	/* Material Web: use app font for all components (buttons, dialogs, selects, etc.) */
+	--md-ref-typeface-brand: var(--font-sans);
+	--md-ref-typeface-plain: var(--font-sans);
+
+	/* Material Design 3 – Expressive type scale (subset used in app). */
+	--md-sys-typescale-display-small-size: 2.25rem; /* 36px */
+	--md-sys-typescale-display-small-line-height: 2.75rem; /* 44px */
+	--md-sys-typescale-display-small-weight: 400;
+
+	--md-sys-typescale-headline-medium-size: 1.75rem; /* 28px */
+	--md-sys-typescale-headline-medium-line-height: 2.25rem; /* 36px */
+	--md-sys-typescale-headline-medium-weight: 400;
+
+	--md-sys-typescale-headline-small-size: 1.5rem; /* 24px */
+	--md-sys-typescale-headline-small-line-height: 2rem; /* 32px */
+	--md-sys-typescale-headline-small-weight: 400;
+
+	--md-sys-typescale-title-medium-size: 1rem; /* 16px */
+	--md-sys-typescale-title-medium-line-height: 1.5rem; /* 24px */
+	--md-sys-typescale-title-medium-weight: 500;
+
+	--md-sys-typescale-body-large-size: 1rem; /* 16px */
+	--md-sys-typescale-body-large-line-height: 1.5rem; /* 24px */
+	--md-sys-typescale-body-large-weight: 400;
+
+	--md-sys-typescale-body-medium-size: 0.875rem; /* 14px */
+	--md-sys-typescale-body-medium-line-height: 1.25rem; /* 20px */
+	--md-sys-typescale-body-medium-weight: 400;
+
+	--md-sys-typescale-label-large-size: 0.875rem; /* 14px */
+	--md-sys-typescale-label-large-line-height: 1.25rem; /* 20px */
+	--md-sys-typescale-label-large-weight: 500;
+
+	--md-sys-typescale-label-medium-size: 0.75rem; /* 12px */
+	--md-sys-typescale-label-medium-line-height: 1rem; /* 16px */
+	--md-sys-typescale-label-medium-weight: 500;
 }
 
 [data-theme='light'] {
@@ -9,6 +49,91 @@
 
 [data-theme='dark'] {
 	color-scheme: dark;
+}
+
+/* Base typography */
+html,
+body {
+	margin: 0;
+	padding: 0;
+	font-family: var(--font-sans);
+	font-size: 16px;
+	line-height: var(--md-sys-typescale-body-large-line-height);
+}
+
+body {
+	font-size: var(--md-sys-typescale-body-large-size);
+	font-weight: var(--md-sys-typescale-body-large-weight);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	font-family: var(--font-sans);
+	font-weight: var(--md-sys-typescale-headline-small-weight);
+	line-height: var(--md-sys-typescale-headline-small-line-height);
+}
+
+h1 {
+	font-size: var(--md-sys-typescale-headline-medium-size);
+	line-height: var(--md-sys-typescale-headline-medium-line-height);
+}
+
+h2 {
+	font-size: var(--md-sys-typescale-headline-small-size);
+}
+
+h3 {
+	font-size: var(--md-sys-typescale-title-medium-size);
+	line-height: var(--md-sys-typescale-title-medium-line-height);
+}
+
+p {
+	margin: 0 0 0.75rem;
+	font-size: var(--md-sys-typescale-body-large-size);
+	line-height: var(--md-sys-typescale-body-large-line-height);
+}
+
+small {
+	font-size: var(--md-sys-typescale-body-medium-size);
+	line-height: var(--md-sys-typescale-body-medium-line-height);
+}
+
+button,
+input,
+select,
+textarea,
+label,
+a,
+option,
+optgroup {
+	font-family: var(--font-sans);
+}
+
+::placeholder {
+	font-family: var(--font-sans);
+}
+
+/* Material Symbols – outlined (for bottom nav icons) */
+.material-symbols-outlined {
+	font-family: 'Material Symbols Outlined';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 1.5rem;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+	-webkit-font-feature-settings: 'liga';
+	-webkit-font-smoothing: antialiased;
 }
 
 /* App shell: top bar, main content, bottom nav */
@@ -29,10 +154,9 @@
 
 .top-app-bar__title {
 	margin: 0;
-	font-size: 1.375rem;
-	font-weight: 500;
-	line-height: 1.25;
-	letter-spacing: 0;
+	font-size: var(--md-sys-typescale-title-medium-size);
+	font-weight: var(--md-sys-typescale-title-medium-weight);
+	line-height: var(--md-sys-typescale-title-medium-line-height);
 }
 
 .main-content {
@@ -55,25 +179,51 @@
 }
 
 .bottom-nav__bar {
-	--md-navigation-bar-container-color: transparent;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 8px 0px 8px;
 }
 
-.nav-tab-link {
+.bottom-nav__bar--plain {
 	display: flex;
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.bottom-nav__icon {
+	display: block;
+	margin-inline: auto;
+	margin-bottom: 2px;
+	font-size: 1.5rem;
+}
+
+.bottom-nav__label {
+	display: block;
+	text-align: center;
+	font-size: var(--md-sys-typescale-label-large-size);
+	line-height: var(--md-sys-typescale-label-large-line-height);
+}
+
+.bottom-nav__link {
 	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 6px 4px 8px;
 	text-decoration: none;
 	color: inherit;
-	min-width: 0;
-	justify-content: center;
+	border-radius: 999px;
 }
 
-/* Ensure Material Web components inherit theme */
-md-navigation-bar,
-md-navigation-tab {
-	--md-sys-color-surface-container: var(--md-sys-color-surface-container, #f3edf7);
+.bottom-nav__link--active {
+	background-color: color-mix(
+		in srgb,
+		var(--md-sys-color-primary, #6750a4) 12%,
+		var(--md-sys-color-surface-container, #f3edf7)
+	);
 }
 
-[data-theme='dark'] md-navigation-bar,
-[data-theme='dark'] md-navigation-tab {
-	--md-sys-color-surface-container: var(--md-sys-color-surface-container, #1d1b20);
-}
+/* (No Material Web nav overrides needed; bottom nav uses plain CSS layout) */

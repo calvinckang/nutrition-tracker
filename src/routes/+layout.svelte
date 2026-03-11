@@ -6,8 +6,6 @@
 
 	// Material Web components used in layout
 	import '@material/web/button/filled-button.js';
-	import '@material/web/labs/navigationbar/navigation-bar.js';
-	import '@material/web/labs/navigationtab/navigation-tab.js';
 
 	let { children } = $props();
 
@@ -16,14 +14,17 @@
 	});
 
 	const navItems = [
-		{ label: 'Today', href: '/' },
-		{ label: 'History', href: '/history' },
-		{ label: 'Foods', href: '/foods' },
-		{ label: 'Settings', href: '/settings' }
+		{ label: 'Today', href: '/', icon: 'today' },
+		{ label: 'History', href: '/history', icon: 'calendar_month' },
+		{ label: 'Foods', href: '/foods', icon: 'restaurant' },
+		{ label: 'Settings', href: '/settings', icon: 'settings' }
 	];
 
 	const authPaths = ['/sign-in', '/sign-up', '/forgot-password', '/check-email', '/reset-password'];
 	const isAuthRoute = (pathname: string) => authPaths.some((p) => pathname === p || pathname.startsWith(p + '/'));
+
+	const isNavActive = (href: string, pathname: string) =>
+		pathname === href || (href !== '/' && pathname.startsWith(href + '/'));
 </script>
 
 <svelte:head>
@@ -43,16 +44,20 @@
 	</main>
 
 	<nav class="bottom-nav">
-		<md-navigation-bar class="bottom-nav__bar">
+		<div class="bottom-nav__bar bottom-nav__bar--plain">
 			{#each navItems as item}
-				<a href={item.href} class="nav-tab-link" aria-label={item.label} data-sveltekit-preload-data="hover">
-					<md-navigation-tab
-						label={item.label}
-						active={$page.url.pathname === item.href || (item.href !== '/' && $page.url.pathname.startsWith(item.href + '/'))}
-					></md-navigation-tab>
+				<a
+					href={item.href}
+					class="bottom-nav__link"
+					class:bottom-nav__link--active={isNavActive(item.href, $page.url.pathname)}
+					aria-label={item.label}
+					data-sveltekit-preload-data="hover"
+				>
+					<span class="material-symbols-outlined bottom-nav__icon">{item.icon}</span>
+					<span class="bottom-nav__label">{item.label}</span>
 				</a>
 			{/each}
-		</md-navigation-bar>
+		</div>
 	</nav>
 </div>
 {/if}

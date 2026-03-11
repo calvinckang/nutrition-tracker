@@ -206,6 +206,7 @@ For a given `MealItem`:
   - Installable on mobile home screens.
   - Service worker caches the app shell and static assets.
 - **Offline (MVP)**: **Online-only**. Sign up and sign in require a data connection. Creating or editing meals and meal items also requires a connection; if the user is offline, show feedback (e.g. “You’re offline”) and do not allow saving. Offline-capable meal logging is a future enhancement.
+ - **Typography**: Use **Google Sans** as the primary app typeface. Load via Google Fonts and apply it as the default font family for all app text, layered on top of the base Material Design 3 typography system.
 - **Delete confirmations**: Before deleting a food entry, meal, or meal item, show a **confirmation dialog** (e.g. “Delete this meal?” with Cancel / Delete). Use M3 dialog.
 - **Food catalog list (MVP)**: Use a **simple scrollable list** for the Foods screen; no search or filter in the first version.
 
