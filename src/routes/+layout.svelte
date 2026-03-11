@@ -21,12 +21,18 @@
 		{ label: 'Foods', href: '/foods' },
 		{ label: 'Settings', href: '/settings' }
 	];
+
+	const authPaths = ['/sign-in', '/sign-up', '/forgot-password', '/check-email', '/reset-password'];
+	const isAuthRoute = (pathname: string) => authPaths.some((p) => pathname === p || pathname.startsWith(p + '/'));
 </script>
 
 <svelte:head>
 	<!-- Theme is set in app.html inline script to avoid FOUC -->
 </svelte:head>
 
+{#if isAuthRoute($page.url.pathname)}
+	{@render children()}
+{:else}
 <div class="app-shell">
 	<header class="top-app-bar">
 		<h1 class="top-app-bar__title">Nutrition Tracker</h1>
@@ -49,3 +55,4 @@
 		</md-navigation-bar>
 	</nav>
 </div>
+{/if}

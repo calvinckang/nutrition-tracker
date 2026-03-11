@@ -13,6 +13,7 @@
 - **MVP input**: All nutrition values are entered **manually from labels** (future: camera/scan).
 - **App name**: Use **Nutrition Tracker** as the placeholder name until a final name is chosen.
 - **Favicon**: Use the **peach emoji** (🍑) as the favicon (implementation: emoji favicon).
+- **Icons**: Use the **Google Material Symbols icon library** (Material Design 3) for all in-app icons. Load via [Google Fonts – Material Symbols](https://developers.google.com/fonts/docs/material_symbols) or use Material Web’s `md-icon` with the same symbol set; keep style (e.g. outlined/rounded) consistent across the app.
 
 ### 2. Roles & Permissions
 
@@ -325,6 +326,7 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
 ### 7. UI Framework & Material Design Usage
 
 - **UI library**: Use **Material Web** (official Material Design 3 web components) directly in Svelte.
+- **Icons**: Use the **Google Material Symbols icon library** (Material Design 3) for all UI icons (navigation, actions, empty states, etc.). Integrate via Google Fonts Material Symbols or `md-icon`; use one style (e.g. outlined or rounded) consistently.
 - **Wrapper strategy**:
   - Use Material Web components in Svelte `.svelte` files (e.g. `md-outlined-text-field`, `md-filled-button`, `md-outlined-card`, `md-list-item`, `md-fab`, `md-navigation-bar`, `md-top-app-bar`, `md-dialog`).
   - Optionally create thin Svelte wrappers only for repeated patterns (e.g. `AppScaffold`, `PrimaryButton`) to reduce duplication, but avoid building a large custom design system.
@@ -381,13 +383,15 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
 
 Build in this order. Deploy at multiple checkpoints (not only at the end).
 
-| Stage | Name | What it covers |
-|-------|------|----------------|
-| **1** | **Scaffold** | SvelteKit, deps, Material Web, PWA baseline, theme (light/dark), layout shell (top bar + bottom nav), routing skeleton. |
-| **2** | **Database** | Neon + Drizzle: schema (auth-related + `food_entries`, `meals`, `meal_items`, profiles/roles), migrations. |
+
+| Stage | Name                     | What it covers                                                                                                                                                                           |
+| ----- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1** | **Scaffold**             | SvelteKit, deps, Material Web, PWA baseline, theme (light/dark), layout shell (top bar + bottom nav), routing skeleton.                                                                  |
+| **2** | **Database**             | Neon + Drizzle: schema (auth-related + `food_entries`, `meals`, `meal_items`, profiles/roles), migrations.                                                                               |
 | **3** | **Auth (user accounts)** | Better Auth: sign up, sign in, sign out, **forgot password**, email verification (block until verified), session, role from email (`calvinchris87@gmail.com` = admin), route protection. |
-| **4** | **Build** | Features + UI in sub-stages **4a → 4b → 4c → 4d** (see below). Server logic (load functions, form actions) lives here. No separate public API for MVP. |
-| **5** | **Deploy (final)** | Optional polish (motion, performance). |
+| **4** | **Build**                | Features + UI in sub-stages **4a → 4b → 4c → 4d** (see below). Server logic (load functions, form actions) lives here. No separate public API for MVP.                                   |
+| **5** | **Deploy (final)**       | Optional polish (motion, performance).                                                                                                                                                   |
+
 
 **Build sub-stages (implementation order: 4a → 4b → 4c → 4d)**:
 
@@ -398,14 +402,16 @@ Build in this order. Deploy at multiple checkpoints (not only at the end).
 
 **Deployment checkpoints** (deploy multiple times):
 
-| After | What’s live | Why deploy here |
-|-------|-------------|-----------------|
-| **1. Scaffold** | Shell: layout, theme, nav, no auth/data | Confirm Netlify + repo; see app and theme on a real URL. |
-| **2. Database** | Same shell; DB + migrations exist | Optional: verify Neon + migrations in prod. |
-| **3. Auth** | Sign up, sign in, sign out, protected routes | Validate Better Auth, secrets, and DB in production. |
-| **4a. Food catalog** | Admin can add/edit/delete food entries | Start populating the catalog in prod. |
-| **4b. Today + meal log** | Full core flow: log meals, add items, see totals | Main MVP; app is usable end-to-end. |
-| **4c. History** | Week view / history | Feature-complete for MVP. |
-| **4d. Settings** | Theme + account settings | Polish and final MVP. |
-| **5. Deploy (final)** | Optional: motion, performance, SEO | Last pass before v1. |
+
+| After                    | What’s live                                      | Why deploy here                                          |
+| ------------------------ | ------------------------------------------------ | -------------------------------------------------------- |
+| **1. Scaffold**          | Shell: layout, theme, nav, no auth/data          | Confirm Netlify + repo; see app and theme on a real URL. |
+| **2. Database**          | Same shell; DB + migrations exist                | Optional: verify Neon + migrations in prod.              |
+| **3. Auth**              | Sign up, sign in, sign out, protected routes     | Validate Better Auth, secrets, and DB in production.     |
+| **4a. Food catalog**     | Admin can add/edit/delete food entries           | Start populating the catalog in prod.                    |
+| **4b. Today + meal log** | Full core flow: log meals, add items, see totals | Main MVP; app is usable end-to-end.                      |
+| **4c. History**          | Week view / history                              | Feature-complete for MVP.                                |
+| **4d. Settings**         | Theme + account settings                         | Polish and final MVP.                                    |
+| **5. Deploy (final)**    | Optional: motion, performance, SEO               | Last pass before v1.                                     |
+
 
