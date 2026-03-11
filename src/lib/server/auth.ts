@@ -47,5 +47,6 @@ export const auth = betterAuth({
 			}
 		}
 	},
-	plugins: [sveltekitCookies(async () => getRequestEvent())]
+	// getRequestEvent() is async in SvelteKit 2; plugin types expect sync — cast to satisfy
+	plugins: [sveltekitCookies((() => getRequestEvent()) as Parameters<typeof sveltekitCookies>[0])]
 });
