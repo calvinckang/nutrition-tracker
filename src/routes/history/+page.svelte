@@ -14,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>History – Nutrition Tracker</title>
+	<title>History – Nutrimaxxing</title>
 </svelte:head>
 
 <div class="history-page">

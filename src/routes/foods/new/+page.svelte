@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-	<title>Add a food – Nutrition Tracker</title>
+	<title>Add a food – Nutrimaxxing</title>
 </svelte:head>
 
 <div class="form-page">

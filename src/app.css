@@ -2,8 +2,8 @@
 :root {
 	color-scheme: light dark;
 
-	/* Google Sans–style font stack (uses local "Google Sans" if available, else system). */
-	--font-sans: 'Google Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	/* TASA Orbiter font stack (uses TASA Orbiter if loaded, else system). */
+	--font-sans: 'TASA Orbiter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 	/* Material Web: use app font for all components (buttons, dialogs, selects, etc.) */
 	--md-ref-typeface-brand: var(--font-sans);

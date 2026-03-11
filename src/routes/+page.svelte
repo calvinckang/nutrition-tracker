@@ -24,7 +24,7 @@
 </script>
 
 <svelte:head>
-	<title>Today – Nutrition Tracker</title>
+	<title>Today – Nutrimaxxing</title>
 </svelte:head>
 
 <div class="today-page">

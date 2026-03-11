@@ -34,7 +34,7 @@
 </script>
 
 <svelte:head>
-	<title>Foods – Nutrition Tracker</title>
+	<title>Foods – Nutrimaxxing</title>
 </svelte:head>
 
 <div class="foods-page">

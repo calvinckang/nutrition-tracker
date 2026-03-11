@@ -1,4 +1,6 @@
-## Nutrition Tracker – Product & Data Spec
+## Nutrimaxxing – Product & Data Spec
+
+Nutrimaxxing is a nutrition tracker that calculates calories and macronutrients for your meals based on ingredient weights and food labels. The app displays total daily intake by totaling all meals logged throughout the day and provides a weekly view to track nutrition over time.
 
 ### 1. Overview
 
@@ -11,7 +13,7 @@
 - **Package manager**: Always use **pnpm** (not npm) for installs, scripts, and tooling.
 - **Primary use case**: Track daily and weekly nutrition (calories and macros) based on ingredient weights and food labels.
 - **MVP input**: All nutrition values are entered **manually from labels** (future: camera/scan).
-- **App name**: Use **Nutrition Tracker** as the placeholder name until a final name is chosen.
+- **App name**: Use **Nutrimaxxing** as the app name throughout the UI, copy, and technical references (package name, emails, etc.).
 - **Favicon**: Use the **peach emoji** (🍑) as the favicon (implementation: emoji favicon).
 - **Icons**: Use the **Google Material Symbols icon library** (Material Design 3) for all in-app icons. Load via [Google Fonts – Material Symbols](https://developers.google.com/fonts/docs/material_symbols) or use Material Web’s `md-icon` with the same symbol set; keep style (e.g. outlined/rounded) consistent across the app.
 
@@ -206,7 +208,7 @@ For a given `MealItem`:
   - Installable on mobile home screens.
   - Service worker caches the app shell and static assets.
 - **Offline (MVP)**: **Online-only**. Sign up and sign in require a data connection. Creating or editing meals and meal items also requires a connection; if the user is offline, show feedback (e.g. “You’re offline”) and do not allow saving. Offline-capable meal logging is a future enhancement.
- - **Typography**: Use **Google Sans** as the primary app typeface. Load via Google Fonts and apply it as the default font family for all app text, layered on top of the base Material Design 3 typography system.
+- **Typography**: Use **TASA Orbiter** as the primary app typeface. Load via a web font provider (e.g. CDN-hosted `@fontsource/tasa-orbiter`) and apply it as the default font family for all app text, layered on top of the base Material Design 3 typography system.
 - **Delete confirmations**: Before deleting a food entry, meal, or meal item, show a **confirmation dialog** (e.g. “Delete this meal?” with Cancel / Delete). Use M3 dialog.
 - **Food catalog list (MVP)**: Use a **simple scrollable list** for the Foods screen; no search or filter in the first version.
 

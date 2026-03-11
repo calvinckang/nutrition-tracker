@@ -44,7 +44,7 @@
 </script>
 
 <svelte:head>
-	<title>Edit {food?.name ?? 'food'} – Nutrition Tracker</title>
+	<title>Edit {food?.name ?? 'food'} – Nutrimaxxing</title>
 </svelte:head>
 
 {#if food}

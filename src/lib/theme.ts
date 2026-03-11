@@ -5,7 +5,7 @@
 export type ThemeMode = 'system' | 'light' | 'dark';
 export type EffectiveTheme = 'light' | 'dark';
 
-const STORAGE_KEY = 'nutrition-tracker-theme';
+const STORAGE_KEY = 'nutrimaxxing-theme';
 
 function getSystemTheme(): EffectiveTheme {
 	if (typeof window === 'undefined') return 'light';

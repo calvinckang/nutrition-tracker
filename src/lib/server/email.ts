@@ -15,7 +15,7 @@ export async function sendEmail(options: {
 		return { error: null };
 	}
 	const { error } = await resend.emails.send({
-		from: env.EMAIL_FROM ?? 'Nutrition Tracker <onboarding@resend.dev>',
+		from: env.EMAIL_FROM ?? 'Nutrimaxxing <onboarding@resend.dev>',
 		to: options.to,
 		subject: options.subject,
 		text: options.text ?? options.html ?? ''
