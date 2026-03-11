@@ -8,27 +8,6 @@ import { db } from '$lib/server/db';
 import { user as userTable } from '$lib/server/db/auth.schema';
 import { sendEmail } from '$lib/server/email';
 
-// #region agent log
-fetch('http://127.0.0.1:7583/ingest/e7e4ebaa-41fd-47cb-b68d-1ef6657021b9', {
-	method: 'POST',
-	headers: {
-		'Content-Type': 'application/json',
-		'X-Debug-Session-Id': 'cf7b24'
-	},
-	body: JSON.stringify({
-		sessionId: 'cf7b24',
-		runId: 'run1',
-		hypothesisId: 'H1',
-		location: 'src/lib/server/auth.ts:11',
-		message: 'Better Auth initializing with ORIGIN',
-		data: {
-			originEnvDefined: typeof env.ORIGIN === 'string' && env.ORIGIN.length > 0
-		},
-		timestamp: Date.now()
-	})
-}).catch(() => {});
-// #endregion
-
 export const auth = betterAuth({
 	baseURL: env.ORIGIN,
 	basePath: '/api/auth',
