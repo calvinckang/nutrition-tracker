@@ -1,0 +1,4 @@
+{"sessionId":"cf7b24","runId":"run1","hypothesisId":"H1","location":"src/lib/server/auth.ts:11","message":"Better Auth initializing with ORIGIN","data":{"originEnvDefined":true},"timestamp":1773250487443}
+{"sessionId":"cf7b24","runId":"run1","hypothesisId":"H1","location":"src/lib/server/auth.ts:11","message":"Better Auth initializing with ORIGIN","data":{"originEnvDefined":true},"timestamp":1773250583183}
+{"sessionId":"cf7b24","runId":"run1","hypothesisId":"H1","location":"src/lib/server/auth.ts:11","message":"Better Auth initializing with ORIGIN","data":{"originEnvDefined":true},"timestamp":1773250591843}
+{"sessionId":"cf7b24","runId":"run1","hypothesisId":"H2","location":"src/hooks.server.ts:24","message":"Handling Better Auth API request","data":{"pathname":"/api/auth/sign-in/email","method":"POST"},"timestamp":1773250607507}

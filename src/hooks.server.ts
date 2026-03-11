@@ -20,6 +20,30 @@ function isAppPath(pathname: string) {
 export const handle: Handle = async ({ event, resolve }) => {
 	const pathname = event.url.pathname;
 
+	// #region agent log
+	if (pathname.startsWith('/api/auth')) {
+		fetch('http://127.0.0.1:7583/ingest/e7e4ebaa-41fd-47cb-b68d-1ef6657021b9', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Debug-Session-Id': 'cf7b24'
+			},
+			body: JSON.stringify({
+				sessionId: 'cf7b24',
+				runId: 'run1',
+				hypothesisId: 'H2',
+				location: 'src/hooks.server.ts:24',
+				message: 'Handling Better Auth API request',
+				data: {
+					pathname,
+					method: event.request.method
+				},
+				timestamp: Date.now()
+			})
+		}).catch(() => {});
+	}
+	// #endregion
+
 	// Let Better Auth handle its API routes first (avoids 404 when handler runs after our logic)
 	if (pathname.startsWith('/api/auth')) {
 		return svelteKitHandler({ event, resolve, auth, building });
