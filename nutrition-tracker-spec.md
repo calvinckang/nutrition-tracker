@@ -22,13 +22,13 @@
   - `user`
 - **Admin**:
   - Only **admin** can **create, edit, and delete food entries** (the food catalog).
-  - Initially, the **only admin** is the app creator: `calvinchris87@gmail.com`.
+  - Initially, the **only admin** is the app creator: `calvinckang@gmail.com`.
 - **Users (all roles)**:
   - Can **sign up** and **sign in** with email/password.
-  - **Email verification** is required on sign up (user must verify email before signing in). **Block access** until the user has verified their email; show a clear **“Check your email”** screen (see §5.7 for copy).
+  - **Email verification** is required on sign up (user must verify email before signing in). **Block access** until the user has verified their email; show a clear **“Check your email”** screen.
   - **Forgot password**: Include a “Forgot password?” flow in the MVP (e.g. user enters email, receives a link to set a new password).
   - Can **create, edit, and delete their own meal logs** (meals and meal items).
-  - Cannot modify the global food catalog unless they are admin (but can **view** the full catalog read-only; see §4).
+  - Cannot modify the global food catalog unless they are admin (but can **view** the full catalog read-only).
 
 ### 3. Data Model (Conceptual)
 
@@ -49,7 +49,7 @@
   - `role`: `'admin' | 'user'` (default `'user'`)
   - `created_at`: timestamp
 - **Admin assignment rule**
-  - On user creation, if `email === 'calvinchris87@gmail.com'`, set `role = 'admin'`; otherwise `role = 'user'`.
+  - On user creation, if `email === 'calvinckang@gmail.com'`, set `role = 'admin'`; otherwise `role = 'user'`.
 
 #### 3.3 Food catalog
 
@@ -205,8 +205,8 @@ For a given `MealItem`:
 - Built as a **PWA**:
   - Installable on mobile home screens.
   - Service worker caches the app shell and static assets.
-- **Offline (MVP)**: **Online-only**. Sign up and sign in require a data connection. Creating or editing meals and meal items also requires a connection; if the user is offline, show feedback (e.g. “You’re offline”) and do not allow saving. Offline-capable meal logging is a future enhancement (see §6).
-- **Delete confirmations**: Before deleting a food entry, meal, or meal item, show a **confirmation dialog** (e.g. “Delete this meal?” with Cancel / Delete). Use M3 dialog; see §5.7 for copy.
+- **Offline (MVP)**: **Online-only**. Sign up and sign in require a data connection. Creating or editing meals and meal items also requires a connection; if the user is offline, show feedback (e.g. “You’re offline”) and do not allow saving. Offline-capable meal logging is a future enhancement.
+- **Delete confirmations**: Before deleting a food entry, meal, or meal item, show a **confirmation dialog** (e.g. “Delete this meal?” with Cancel / Delete). Use M3 dialog.
 - **Food catalog list (MVP)**: Use a **simple scrollable list** for the Foods screen; no search or filter in the first version.
 
 #### 5.2 Nutrition fields layout
@@ -271,7 +271,7 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
 #### 5.7 Voice & copy
 
 - **Tone**: Casual but not overly friendly; avoid technical words or jargon.
-- Use the following example copy (and similar phrasing) for consistency. Implement with M3 components (snackbar, banner, dialog) as specified in §7.
+- Use the following example copy (and similar phrasing) for consistency. Implement with M3 components (snackbar, banner, dialog).
 
 **Email verification & access blocking**
 
@@ -388,7 +388,7 @@ Build in this order. Deploy at multiple checkpoints (not only at the end).
 | ----- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **1** | **Scaffold**             | SvelteKit, deps, Material Web, PWA baseline, theme (light/dark), layout shell (top bar + bottom nav), routing skeleton.                                                                  |
 | **2** | **Database**             | Neon + Drizzle: schema (auth-related + `food_entries`, `meals`, `meal_items`, profiles/roles), migrations.                                                                               |
-| **3** | **Auth (user accounts)** | Better Auth: sign up, sign in, sign out, **forgot password**, email verification (block until verified), session, role from email (`calvinchris87@gmail.com` = admin), route protection. |
+| **3** | **Auth (user accounts)** | Better Auth: sign up, sign in, sign out, **forgot password**, email verification (block until verified), session, role from email (`calvinckang@gmail.com` = admin), route protection. |
 | **4** | **Build**                | Features + UI in sub-stages **4a → 4b → 4c → 4d** (see below). Server logic (load functions, form actions) lives here. No separate public API for MVP.                                   |
 | **5** | **Deploy (final)**       | Optional polish (motion, performance).                                                                                                                                                   |
 

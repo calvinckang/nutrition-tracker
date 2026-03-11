@@ -17,6 +17,10 @@
 			{ email, password, callbackURL: '/' },
 			{
 				onError: (ctx) => {
+					// #region agent log
+					const errData = { status: ctx.error?.status, message: ctx.error?.message, hypothesisId: 'H3-H5' };
+					fetch('http://127.0.0.1:7583/ingest/e7e4ebaa-41fd-47cb-b68d-1ef6657021b9', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '726253' }, body: JSON.stringify({ sessionId: '726253', location: 'sign-in onError', message: 'signIn error', data: errData, timestamp: Date.now() }) }).catch(() => {});
+					// #endregion
 					error = ctx.error?.message ?? 'Email or password doesn’t look right. Try again.';
 					if (ctx.error?.status === 403) {
 						error = 'Please verify your email first. Check your inbox for the link.';
