@@ -13,13 +13,16 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:unit": "vitest",
-		"test": "npm run test:unit -- --run && npm run test:e2e",
+		"test": "pnpm run test:unit -- --run && pnpm run test:e2e",
 		"test:e2e": "playwright test",
 		"db:push": "drizzle-kit push",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"auth:schema": "better-auth generate --config src/lib/server/auth.ts --output src/lib/server/db/auth.schema.ts --yes"
+	},
+	"dependencies": {
+		"@material/web": "^2.4.1"
 	},
 	"devDependencies": {
 		"@better-auth/cli": "~1.4.21",
@@ -30,6 +33,7 @@
 		"@sveltejs/adapter-netlify": "^5.2.4",
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"@vite-pwa/sveltekit": "^1.1.0",
 		"@types/node": "^24",
 		"@vitest/browser-playwright": "^4.0.18",
 		"better-auth": "~1.4.21",

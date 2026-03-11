@@ -1,2 +1,6 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+	// Today screen – placeholder until Stage 4b
+</script>
+
+<h2>Today</h2>
+<p>Meal log and totals will go here (Stage 4b).</p>

@@ -1,0 +1,79 @@
+/* Global styles and theme. Theme is applied via data-theme on html (set in app.html). */
+:root {
+	color-scheme: light dark;
+}
+
+[data-theme='light'] {
+	color-scheme: light;
+}
+
+[data-theme='dark'] {
+	color-scheme: dark;
+}
+
+/* App shell: top bar, main content, bottom nav */
+.app-shell {
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.top-app-bar {
+	flex-shrink: 0;
+	padding: 16px 16px 12px;
+	border-bottom: 1px solid color-mix(in var(--md-sys-color-outline-variant, currentColor), transparent 80%);
+	background: color-mix(in var(--md-sys-color-surface, #fff), transparent 0%);
+}
+
+.top-app-bar__title {
+	margin: 0;
+	font-size: 1.375rem;
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: 0;
+}
+
+.main-content {
+	flex: 1;
+	overflow: auto;
+	padding: 16px;
+	padding-bottom: 24px;
+}
+
+.bottom-nav {
+	flex-shrink: 0;
+	position: sticky;
+	bottom: 0;
+	background: var(--md-sys-color-surface-container, #f3edf7);
+	border-top: 1px solid color-mix(in var(--md-sys-color-outline-variant, currentColor), transparent 80%);
+}
+
+[data-theme='dark'] .bottom-nav {
+	background: var(--md-sys-color-surface-container, #1d1b20);
+}
+
+.bottom-nav__bar {
+	--md-navigation-bar-container-color: transparent;
+}
+
+.nav-tab-link {
+	display: flex;
+	flex: 1;
+	text-decoration: none;
+	color: inherit;
+	min-width: 0;
+	justify-content: center;
+}
+
+/* Ensure Material Web components inherit theme */
+md-navigation-bar,
+md-navigation-tab {
+	--md-sys-color-surface-container: var(--md-sys-color-surface-container, #f3edf7);
+}
+
+[data-theme='dark'] md-navigation-bar,
+[data-theme='dark'] md-navigation-tab {
+	--md-sys-color-surface-container: var(--md-sys-color-surface-container, #1d1b20);
+}

@@ -6,12 +6,13 @@
 - **Framework**: **SvelteKit** frontend.
 - **Backend**: **Neon** (serverless Postgres) with **Drizzle ORM**.
 - **Auth**: **Better Auth** (email/password).
+- **Email (verification & forgot password)**: **Resend** (env: `RESEND_API_KEY`).
 - **Hosting**: Deployed on **Netlify** via GitHub.
 - **Package manager**: Always use **pnpm** (not npm) for installs, scripts, and tooling.
 - **Primary use case**: Track daily and weekly nutrition (calories and macros) based on ingredient weights and food labels.
 - **MVP input**: All nutrition values are entered **manually from labels** (future: camera/scan).
 - **App name**: Use **Nutrition Tracker** as the placeholder name until a final name is chosen.
-- **Favicon**: Use a **peach emoji** (🍑) as the favicon (implementation can use an emoji favicon or a peach image/SVG).
+- **Favicon**: Use the **peach emoji** (🍑) as the favicon (implementation: emoji favicon).
 
 ### 2. Roles & Permissions
 

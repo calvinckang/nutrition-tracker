@@ -3,6 +3,15 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍑</text></svg>" />
+		<script>
+			(function() {
+				var m = localStorage.getItem('nutrition-tracker-theme') || 'system';
+				var e = m === 'light' ? 'light' : m === 'dark' ? 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+				document.documentElement.setAttribute('data-theme', e);
+				document.documentElement.style.colorScheme = e;
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
