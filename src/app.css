@@ -138,6 +138,10 @@ md-filled-select {
 	--md-filled-select-text-field-container-color: var(--md-sys-color-surface-container);
 }
 
+[data-theme='dark'] md-dialog {
+	--md-dialog-container-color: var(--md-sys-color-surface-container);
+}
+
 /* Base surfaces */
 [data-theme='light'] body {
 	background-color: var(--md-sys-color-surface);
@@ -289,6 +293,10 @@ body > div {
 	max-width: 480px;
 	margin-inline: auto;
 	padding: 20px 20px 96px;
+}
+
+.main-content--foods {
+	padding-bottom: 164px;
 }
 
 .bottom-nav {

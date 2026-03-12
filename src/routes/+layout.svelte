@@ -35,7 +35,10 @@
 	{@render children()}
 {:else}
 <div class="app-shell">
-	<main class="main-content">
+	<main
+		class="main-content"
+		class:main-content--foods={$page.url.pathname === '/foods' || $page.url.pathname.startsWith('/foods/')}
+	>
 		{@render children()}
 	</main>
 

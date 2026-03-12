@@ -86,7 +86,7 @@
 	<md-dialog open={dialogOpen} onclosed={() => { dialogOpen = false; deleteTarget = null; }}>
 		<div slot="headline">Delete this food?</div>
 		<form slot="content" method="dialog">
-			<p>You can't undo this. It will stay removed from past meals too.</p>
+			<p>You can't undo this. It will be removed from past meals too.</p>
 		</form>
 		<div slot="actions">
 			<md-text-button type="button" onclick={closeDelete}>Cancel</md-text-button>
@@ -182,6 +182,10 @@
 		width: 100%;
 		border-radius: 999px;
 		box-shadow: 0 4px 8px color-mix(in srgb, var(--md-sys-color-outline-variant, #cac4d0) 40%, transparent);
+	}
+	:global(md-dialog) {
+		max-width: 440px;
+		width: min(calc(100vw - 40px), 440px);
 	}
 	.toast {
 		position: fixed;
