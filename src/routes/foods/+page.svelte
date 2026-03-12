@@ -6,7 +6,6 @@
 	import '@material/web/button/outlined-button.js';
 	import '@material/web/button/text-button.js';
 	import '@material/web/dialog/dialog.js';
-	import '@material/web/fab/fab.js';
 
 	let { data } = $props();
 	const isAdmin = $derived(data?.role === 'admin');
@@ -38,6 +37,10 @@
 </svelte:head>
 
 <div class="foods-page">
+	<header class="page-header foods-header">
+		<h2 class="foods-title">Foods</h2>
+	</header>
+
 	{#if foods.length === 0}
 		<div class="empty-state">
 			<p class="empty-state__text">No foods in the list yet.</p>
@@ -73,7 +76,7 @@
 		</ul>
 		{#if isAdmin}
 			<a href="/foods/new" class="fab-link" data-sveltekit-preload-data="hover" aria-label="Add a food">
-				<md-fab label="Add a food" variant="primary"></md-fab>
+				<md-filled-button>Add a food</md-filled-button>
 			</a>
 		{/if}
 	{/if}
@@ -105,14 +108,20 @@
 
 <style>
 	.foods-page {
-		min-height: 200px;
+		min-height: 220px;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+	.foods-title {
+		margin: 0;
 	}
 	.empty-state {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 16px;
-		padding: 32px 16px;
+		gap: 18px;
+		padding: 36px 18px;
 		text-align: center;
 	}
 	.empty-state__text {
@@ -123,23 +132,24 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
 	}
 	.food-item {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 12px;
-		padding: 12px 0;
-		border-bottom: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+		gap: 14px;
+		padding: 20px;
+		border-radius: 24px;
+		background: var(--md-sys-color-surface-container, #fffbfe);
 	}
 	.food-item__main {
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
 		min-width: 0;
-	}
-	.food-item__name {
-		font-weight: 500;
 	}
 	.food-item__brand {
 		font-size: 0.875rem;
@@ -156,12 +166,18 @@
 	}
 	.fab-link {
 		position: fixed;
-		/* Stay inside the centered 600px app shell on wide screens, and 16px from the edge on small screens */
-		right: max(16px, calc((100vw - 600px) / 2 + 16px));
+		left: 50%;
+		transform: translateX(-50%);
+		width: min(calc(100vw - 40px), 440px);
 		/* Sit comfortably above the bottom nav */
 		bottom: 96px;
 		text-decoration: none;
 		color: inherit;
+	}
+	.fab-link md-filled-button {
+		width: 100%;
+		border-radius: 999px;
+		box-shadow: 0 4px 8px color-mix(in srgb, var(--md-sys-color-outline-variant, #cac4d0) 40%, transparent);
 	}
 	.toast {
 		position: fixed;

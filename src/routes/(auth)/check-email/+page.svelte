@@ -38,7 +38,8 @@
 <style>
 	.auth-card {
 		width: 100%;
-		max-width: 360px;
+		max-width: 480px;
+		padding: 20px;
 	}
 	.auth-heading {
 		margin: 0 0 24px;

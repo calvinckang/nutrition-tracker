@@ -19,6 +19,11 @@ export function getStoredThemeMode(): ThemeMode {
 	return 'system';
 }
 
+// Backwards-compatible alias for components that call getThemeMode()
+export function getThemeMode(): ThemeMode {
+	return getStoredThemeMode();
+}
+
 export function getEffectiveTheme(mode: ThemeMode): EffectiveTheme {
 	if (mode === 'light') return 'light';
 	if (mode === 'dark') return 'dark';

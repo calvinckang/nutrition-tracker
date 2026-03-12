@@ -3,13 +3,15 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
 import { eq } from 'drizzle-orm';
 import { env } from '$env/dynamic/private';
+import { dev } from '$app/environment';
 import { getRequestEvent } from '$app/server';
 import { db } from '$lib/server/db';
 import { user as userTable } from '$lib/server/db/auth.schema';
 import { sendEmail } from '$lib/server/email';
 
 export const auth = betterAuth({
-	baseURL: env.ORIGIN,
+	// In dev, leave baseURL unset so Better Auth uses the request origin (avoids 404 when port differs from 5173)
+	baseURL: dev ? undefined : env.ORIGIN,
 	basePath: '/api/auth',
 	secret: env.BETTER_AUTH_SECRET,
 	database: drizzleAdapter(db, { provider: 'pg' }),

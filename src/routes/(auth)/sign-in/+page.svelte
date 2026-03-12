@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { authClient } from '$lib/auth-client';
+	import '@material/web/textfield/outlined-text-field.js';
 	import '@material/web/button/filled-button.js';
 	import '@material/web/button/outlined-button.js';
 
@@ -29,29 +30,44 @@
 	}
 </script>
 
-<div class="auth-card">
-	<h1 class="auth-heading">Sign in</h1>
-	<form class="auth-form" onsubmit={handleSubmit}>
-		<label class="auth-label" for="signin-email">Email</label>
-		<input
+<div class="auth-page">
+	<header class="page-header">
+		<h1 class="auth-brand">Nutrimaxxing</h1>
+	</header>
+	<div class="auth-card">
+		<h2 class="auth-heading">Sign in</h2>
+	<form
+		class="auth-form"
+		onsubmit={handleSubmit}
+		onkeydown={(e) => {
+			if (e.key !== 'Enter') return;
+			if (document.activeElement instanceof HTMLTextAreaElement) return;
+			e.preventDefault();
+			(e.currentTarget as HTMLFormElement).requestSubmit();
+		}}
+	>
+		<md-outlined-text-field
 			id="signin-email"
-			class="auth-input"
+			label="Email"
 			type="email"
 			required
-			bind:value={email}
+			no-asterisk
+			value={email}
+			oninput={(e) => (email = (e.target as { value: string })?.value ?? '')}
 			disabled={loading}
 			autocomplete="email"
-		/>
-		<label class="auth-label" for="signin-password">Password</label>
-		<input
+		></md-outlined-text-field>
+		<md-outlined-text-field
 			id="signin-password"
-			class="auth-input"
+			label="Password"
 			type="password"
 			required
-			bind:value={password}
+			no-asterisk
+			value={password}
+			oninput={(e) => (password = (e.target as { value: string })?.value ?? '')}
 			disabled={loading}
 			autocomplete="current-password"
-		/>
+		></md-outlined-text-field>
 		{#if error}
 			<p class="auth-error">{error}</p>
 		{/if}
@@ -59,30 +75,42 @@
 			{loading ? 'Signing in…' : 'Sign in'}
 		</md-filled-button>
 	</form>
-	<p class="auth-links">
-		<a href="/forgot-password">Forgot password?</a>
-		·
-		<a href="/sign-up">Sign up</a>
-	</p>
+	<div class="auth-links">
+		<div><a href="/forgot-password">Forgot password?</a></div>
+		<div>Don't have an account? <a href="/sign-up">Sign up</a></div>
+	</div>
+	</div>
 </div>
 
 <style>
+	.auth-page {
+		width: 100%;
+		max-width: 480px;
+		display: flex;
+		flex-direction: column;
+	}
+	.auth-brand {
+		margin: 0;
+		font-size: var(--md-sys-typescale-display-small-size);
+		font-weight: 300;
+		line-height: var(--md-sys-typescale-display-small-line-height);
+	}
 	.auth-card {
 		width: 100%;
-		max-width: 360px;
+		max-width: 480px;
+		padding: 20px;
 	}
 	.auth-heading {
 		margin: 0 0 24px;
-		font-size: 1.5rem;
-		font-weight: 500;
 	}
 	.auth-form {
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
 	}
-	.auth-label { display: block; margin-bottom: 4px; font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant, #49454f); }
-	.auth-input { width: 100%; padding: 12px 16px; border: 1px solid var(--md-sys-color-outline, #79747e); border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
+	.auth-form :global(md-filled-button) {
+		margin-top: 8px;
+	}
 	.auth-error {
 		margin: 0;
 		color: var(--md-sys-color-error, #b3261e);
@@ -91,8 +119,15 @@
 	.auth-links {
 		margin: 24px 0 0;
 		font-size: 0.875rem;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
 	}
 	.auth-links a {
 		color: var(--md-sys-color-primary, #6750a4);
+		text-decoration: none;
+	}
+	.auth-links a:hover {
+		text-decoration: underline;
 	}
 </style>

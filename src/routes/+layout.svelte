@@ -35,10 +35,6 @@
 	{@render children()}
 {:else}
 <div class="app-shell">
-	<header class="top-app-bar">
-		<h1 class="top-app-bar__title">Nutrimaxxing</h1>
-	</header>
-
 	<main class="main-content">
 		{@render children()}
 	</main>

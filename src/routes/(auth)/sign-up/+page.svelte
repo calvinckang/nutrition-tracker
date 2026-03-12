@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { authClient } from '$lib/auth-client';
+	import '@material/web/textfield/outlined-text-field.js';
 	import '@material/web/button/filled-button.js';
 
 	let name = $state('');
@@ -32,15 +33,55 @@
 	}
 </script>
 
-<div class="auth-card">
-	<h1 class="auth-heading">Sign up</h1>
-	<form class="auth-form" onsubmit={handleSubmit}>
-		<label class="auth-label" for="signup-name">Name</label>
-		<input id="signup-name" class="auth-input" type="text" required bind:value={name} disabled={loading} autocomplete="name" />
-		<label class="auth-label" for="signup-email">Email</label>
-		<input id="signup-email" class="auth-input" type="email" required bind:value={email} disabled={loading} autocomplete="email" />
-		<label class="auth-label" for="signup-password">Password</label>
-		<input id="signup-password" class="auth-input" type="password" required bind:value={password} disabled={loading} autocomplete="new-password" />
+<div class="auth-page">
+	<header class="page-header">
+		<h1 class="auth-brand">Nutrimaxxing</h1>
+	</header>
+	<div class="auth-card">
+		<h2 class="auth-heading">Sign up</h2>
+	<form
+		class="auth-form"
+		onsubmit={handleSubmit}
+		onkeydown={(e) => {
+			if (e.key !== 'Enter') return;
+			if (document.activeElement instanceof HTMLTextAreaElement) return;
+			e.preventDefault();
+			(e.currentTarget as HTMLFormElement).requestSubmit();
+		}}
+	>
+		<md-outlined-text-field
+			id="signup-name"
+			label="Name"
+			type="text"
+			required
+			no-asterisk
+			value={name}
+			oninput={(e) => (name = (e.target as { value: string })?.value ?? '')}
+			disabled={loading}
+			autocomplete="name"
+		></md-outlined-text-field>
+		<md-outlined-text-field
+			id="signup-email"
+			label="Email"
+			type="email"
+			required
+			no-asterisk
+			value={email}
+			oninput={(e) => (email = (e.target as { value: string })?.value ?? '')}
+			disabled={loading}
+			autocomplete="email"
+		></md-outlined-text-field>
+		<md-outlined-text-field
+			id="signup-password"
+			label="Password"
+			type="password"
+			required
+			no-asterisk
+			value={password}
+			oninput={(e) => (password = (e.target as { value: string })?.value ?? '')}
+			disabled={loading}
+			autocomplete="new-password"
+		></md-outlined-text-field>
 		{#if error}
 			<p class="auth-error">{error}</p>
 		{/if}
@@ -49,27 +90,40 @@
 		</md-filled-button>
 	</form>
 	<p class="auth-links">
-		<a href="/sign-in">Already have an account? Sign in</a>
+		Already have an account? <a href="/sign-in">Sign in</a>
 	</p>
+	</div>
 </div>
 
 <style>
+	.auth-page {
+		width: 100%;
+		max-width: 480px;
+		display: flex;
+		flex-direction: column;
+	}
+	.auth-brand {
+		margin: 0;
+		font-size: var(--md-sys-typescale-display-small-size);
+		font-weight: 300;
+		line-height: var(--md-sys-typescale-display-small-line-height);
+	}
 	.auth-card {
 		width: 100%;
-		max-width: 360px;
+		max-width: 480px;
+		padding: 20px;
 	}
 	.auth-heading {
 		margin: 0 0 24px;
-		font-size: 1.5rem;
-		font-weight: 500;
 	}
 	.auth-form {
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
 	}
-	.auth-label { display: block; margin-bottom: 4px; font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant, #49454f); }
-	.auth-input { width: 100%; padding: 12px 16px; border: 1px solid var(--md-sys-color-outline, #79747e); border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
+	.auth-form :global(md-filled-button) {
+		margin-top: 8px;
+	}
 	.auth-error {
 		margin: 0;
 		color: var(--md-sys-color-error, #b3261e);
@@ -81,5 +135,9 @@
 	}
 	.auth-links a {
 		color: var(--md-sys-color-primary, #6750a4);
+		text-decoration: none;
+	}
+	.auth-links a:hover {
+		text-decoration: underline;
 	}
 </style>

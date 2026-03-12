@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { authClient } from '$lib/auth-client';
+	import '@material/web/textfield/outlined-text-field.js';
 	import '@material/web/button/filled-button.js';
 
 	let newPassword = $state('');
@@ -36,9 +37,27 @@
 			<a href="/sign-in">Sign in</a>
 		</p>
 	{:else if token}
-		<form class="auth-form" onsubmit={handleSubmit}>
-			<label class="auth-label" for="reset-password">New password</label>
-			<input id="reset-password" class="auth-input" type="password" required bind:value={newPassword} disabled={loading} autocomplete="new-password" />
+		<form
+			class="auth-form"
+			onsubmit={handleSubmit}
+			onkeydown={(e) => {
+				if (e.key !== 'Enter') return;
+				if (document.activeElement instanceof HTMLTextAreaElement) return;
+				e.preventDefault();
+				(e.currentTarget as HTMLFormElement).requestSubmit();
+			}}
+		>
+			<md-outlined-text-field
+				id="reset-password"
+				label="New password"
+				type="password"
+				required
+				no-asterisk
+				value={newPassword}
+				oninput={(e) => (newPassword = (e.target as { value: string })?.value ?? '')}
+				disabled={loading}
+				autocomplete="new-password"
+			></md-outlined-text-field>
 			{#if error}
 				<p class="auth-error">{error}</p>
 			{/if}
@@ -57,7 +76,8 @@
 <style>
 	.auth-card {
 		width: 100%;
-		max-width: 360px;
+		max-width: 480px;
+		padding: 20px;
 	}
 	.auth-heading {
 		margin: 0 0 24px;
@@ -73,8 +93,6 @@
 		flex-direction: column;
 		gap: 16px;
 	}
-	.auth-label { display: block; margin-bottom: 4px; font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant, #49454f); }
-	.auth-input { width: 100%; padding: 12px 16px; border: 1px solid var(--md-sys-color-outline, #79747e); border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
 	.auth-error {
 		margin: 0;
 		color: var(--md-sys-color-error, #b3261e);

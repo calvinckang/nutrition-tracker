@@ -1,9 +1,17 @@
 /* Global styles, theme, and typography. Theme is applied via data-theme on html (set in app.html). */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
 :root {
 	color-scheme: light dark;
 
 	/* TASA Orbiter font stack (uses TASA Orbiter if loaded, else system). */
 	--font-sans: 'TASA Orbiter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	/* Macondo from Google Fonts for h1 / display headings */
+	--font-display: 'Macondo', var(--font-sans);
 
 	/* Material Web: use app font for all components (buttons, dialogs, selects, etc.) */
 	--md-ref-typeface-brand: var(--font-sans);
@@ -13,6 +21,7 @@
 	--md-sys-typescale-display-small-size: 2.25rem; /* 36px */
 	--md-sys-typescale-display-small-line-height: 2.75rem; /* 44px */
 	--md-sys-typescale-display-small-weight: 400;
+	--md-sys-typescale-display-small-letter-spacing: -0.02em;
 
 	--md-sys-typescale-headline-medium-size: 1.75rem; /* 28px */
 	--md-sys-typescale-headline-medium-line-height: 2.25rem; /* 36px */
@@ -22,7 +31,7 @@
 	--md-sys-typescale-headline-small-line-height: 2rem; /* 32px */
 	--md-sys-typescale-headline-small-weight: 400;
 
-	--md-sys-typescale-title-medium-size: 1rem; /* 16px */
+	--md-sys-typescale-title-medium-size: 1.125rem; /* 18px */
 	--md-sys-typescale-title-medium-line-height: 1.5rem; /* 24px */
 	--md-sys-typescale-title-medium-weight: 500;
 
@@ -34,13 +43,66 @@
 	--md-sys-typescale-body-medium-line-height: 1.25rem; /* 20px */
 	--md-sys-typescale-body-medium-weight: 400;
 
-	--md-sys-typescale-label-large-size: 0.875rem; /* 14px */
-	--md-sys-typescale-label-large-line-height: 1.25rem; /* 20px */
+	--md-sys-typescale-label-large-size: 1rem; /* 16px */
+	--md-sys-typescale-label-large-line-height: 1.5rem; /* 24px */
 	--md-sys-typescale-label-large-weight: 500;
 
-	--md-sys-typescale-label-medium-size: 0.75rem; /* 12px */
-	--md-sys-typescale-label-medium-line-height: 1rem; /* 16px */
+	--md-sys-typescale-label-medium-size: 0.875rem; /* 14px */
+	--md-sys-typescale-label-medium-line-height: 1.25rem; /* 20px */
 	--md-sys-typescale-label-medium-weight: 500;
+
+	/* Material Web button container heights */
+	--md-outlined-button-container-height: 48px;
+	--md-filled-button-container-height: 48px;
+
+	/* Light theme color tokens (M3-ish defaults) */
+	--md-sys-color-surface: #f3edf7;
+	--md-sys-color-surface-container: #fffbfe;
+	--md-sys-color-on-surface: #1d1b1f;
+	--md-sys-color-on-surface-variant: #49454f;
+	--md-sys-color-primary: #6750a4;
+	--md-sys-color-on-primary: #ffffff;
+	--md-sys-color-outline: #79747e;
+	--md-sys-color-outline-variant: #cac4d0;
+	--md-sys-color-inverse-surface: #313033;
+	--md-sys-color-inverse-on-surface: #f4eff4;
+}
+
+/* Consistent horizontal padding for all Material Web buttons globally */
+md-text-button,
+md-filled-button,
+md-outlined-button {
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+/* Global border radius for all outlined inputs (6px) */
+md-outlined-text-field {
+	--md-outlined-text-field-container-shape: 6px;
+}
+md-outlined-select {
+	--md-outlined-select-text-field-container-shape: 6px;
+}
+.food-name-input {
+	border-radius: 6px;
+}
+
+/* Page header: title + subtitle/date in a row, space-between, 1rem gap */
+.page-header {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+	padding: 0;
+}
+
+/* Sign-in and sign-up: keep header padding, more bottom margin, center h1 */
+.auth-page .page-header {
+	padding: 20px;
+	margin-bottom: 40px;
+	justify-content: center;
 }
 
 [data-theme='light'] {
@@ -49,6 +111,29 @@
 
 [data-theme='dark'] {
 	color-scheme: dark;
+
+	/* Dark theme color tokens */
+	--md-sys-color-surface: #141218;
+	--md-sys-color-surface-container: #1d1b20;
+	--md-sys-color-on-surface: #e6e1e5;
+	--md-sys-color-on-surface-variant: #cac4d0;
+	--md-sys-color-primary: #d0bcff;
+	--md-sys-color-on-primary: #381e72;
+	--md-sys-color-outline: #938f99;
+	--md-sys-color-outline-variant: #49454f;
+	--md-sys-color-inverse-surface: #e6e1e5;
+	--md-sys-color-inverse-on-surface: #313033;
+}
+
+/* Base surfaces */
+[data-theme='light'] body {
+	background-color: var(--md-sys-color-surface);
+	color: var(--md-sys-color-on-surface);
+}
+
+[data-theme='dark'] body {
+	background-color: var(--md-sys-color-surface);
+	color: var(--md-sys-color-on-surface);
 }
 
 /* Base typography */
@@ -59,11 +144,13 @@ body {
 	font-family: var(--font-sans);
 	font-size: 16px;
 	line-height: var(--md-sys-typescale-body-large-line-height);
+	overflow-x: hidden;
 }
 
 body {
 	font-size: var(--md-sys-typescale-body-large-size);
 	font-weight: var(--md-sys-typescale-body-large-weight);
+	width: 100%;
 }
 
 h1,
@@ -74,21 +161,39 @@ h5,
 h6 {
 	margin: 0;
 	font-family: var(--font-sans);
-	font-weight: var(--md-sys-typescale-headline-small-weight);
+	font-weight: 600;
 	line-height: var(--md-sys-typescale-headline-small-line-height);
 }
 
 h1 {
-	font-size: var(--md-sys-typescale-headline-medium-size);
-	line-height: var(--md-sys-typescale-headline-medium-line-height);
+	font-family: var(--font-display);
+	font-size: var(--md-sys-typescale-display-small-size);
+	line-height: var(--md-sys-typescale-display-small-line-height);
+	text-transform: uppercase;
+	font-weight: 300;
+	color: var(--md-sys-color-primary);
+	letter-spacing: 0.025em;
+	text-align: center;
 }
 
 h2 {
-	font-size: var(--md-sys-typescale-headline-small-size);
+	font-size: var(--md-sys-typescale-display-small-size);
+	line-height: var(--md-sys-typescale-display-small-line-height);
+	font-weight: 700;
+	letter-spacing: var(--md-sys-typescale-display-small-letter-spacing);
 }
 
 h3 {
+	font-size: var(--md-sys-typescale-headline-small-size);
+	font-weight: var(--md-sys-typescale-headline-small-weight);
+	line-height: var(--md-sys-typescale-headline-small-line-height);
+}
+
+/* Card/section title typography (meal name, food item name) */
+.meal-name,
+.food-item__name {
 	font-size: var(--md-sys-typescale-title-medium-size);
+	font-weight: var(--md-sys-typescale-title-medium-weight);
 	line-height: var(--md-sys-typescale-title-medium-line-height);
 }
 
@@ -141,8 +246,11 @@ optgroup {
 	display: flex;
 	flex-direction: column;
 	min-height: 100dvh;
-	max-width: 600px;
-	margin: 0 auto;
+	width: 100%;
+}
+
+body > div {
+	width: 100%;
 }
 
 .top-app-bar {
@@ -160,18 +268,26 @@ optgroup {
 }
 
 .main-content {
+	display: flex;
+	flex-direction: column;
 	flex: 1;
 	overflow: auto;
-	padding: 16px;
-	padding-bottom: 24px;
+	width: 100%;
+	max-width: 480px;
+	margin-inline: auto;
+	padding: 20px 20px 96px;
 }
 
 .bottom-nav {
 	flex-shrink: 0;
-	position: sticky;
+	position: fixed;
+	left: 0;
+	right: 0;
 	bottom: 0;
+	width: 100%;
 	background: var(--md-sys-color-surface-container, #f3edf7);
 	border-top: 1px solid color-mix(in var(--md-sys-color-outline-variant, currentColor), transparent 80%);
+	z-index: 100;
 }
 
 [data-theme='dark'] .bottom-nav {
@@ -182,14 +298,15 @@ optgroup {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	padding: 8px 0px 8px;
+	width: 100%;
+	padding: 8px 8px 8px;
 }
 
 .bottom-nav__bar--plain {
 	display: flex;
 	width: 100%;
-	max-width: 600px;
-	margin: 0 auto;
+	max-width: 480px;
+	margin-inline: auto;
 }
 
 .bottom-nav__icon {
@@ -202,8 +319,8 @@ optgroup {
 .bottom-nav__label {
 	display: block;
 	text-align: center;
-	font-size: var(--md-sys-typescale-label-large-size);
-	line-height: var(--md-sys-typescale-label-large-line-height);
+	font-size: 0.8rem;
+	line-height: 1.2rem;
 }
 
 .bottom-nav__link {
@@ -224,6 +341,10 @@ optgroup {
 		var(--md-sys-color-primary, #6750a4) 12%,
 		var(--md-sys-color-surface-container, #f3edf7)
 	);
+}
+
+[data-theme='dark'] .bottom-nav__link--active {
+	background-color: var(--md-sys-color-surface);
 }
 
 /* (No Material Web nav overrides needed; bottom nav uses plain CSS layout) */
