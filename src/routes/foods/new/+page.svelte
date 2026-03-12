@@ -141,56 +141,60 @@
 				required
 				no-asterisk
 			></md-outlined-text-field>
-			<md-outlined-text-field
-				id="fatG"
-				name="fatG"
-				label="Fat (g)"
-				type="number"
-				value={fatG}
-				oninput={(e) => (fatG = (e.currentTarget as HTMLInputElement).value)}
-				inputmode="decimal"
-				step="0.01"
-				required
-				no-asterisk
-			></md-outlined-text-field>
-			<p class="form-nutrient-sub">of which Saturated (g)</p>
-			<md-outlined-text-field
-				id="saturatedFatG"
-				name="saturatedFatG"
-				label="Saturated fat (g)"
-				type="number"
-				value={saturatedFatG}
-				oninput={(e) => (saturatedFatG = (e.currentTarget as HTMLInputElement).value)}
-				inputmode="decimal"
-				step="0.01"
-				required
-				no-asterisk
-			></md-outlined-text-field>
-			<md-outlined-text-field
-				id="carbohydrateG"
-				name="carbohydrateG"
-				label="Carbohydrate (g)"
-				type="number"
-				value={carbohydrateG}
-				oninput={(e) => (carbohydrateG = (e.currentTarget as HTMLInputElement).value)}
-				inputmode="decimal"
-				step="0.01"
-				required
-				no-asterisk
-			></md-outlined-text-field>
-			<p class="form-nutrient-sub">of which Sugars (g)</p>
-			<md-outlined-text-field
-				id="sugarsG"
-				name="sugarsG"
-				label="Sugars (g)"
-				type="number"
-				value={sugarsG}
-				oninput={(e) => (sugarsG = (e.currentTarget as HTMLInputElement).value)}
-				inputmode="decimal"
-				step="0.01"
-				required
-				no-asterisk
-			></md-outlined-text-field>
+			<div class="form-row-tight">
+				<md-outlined-text-field
+					id="fatG"
+					name="fatG"
+					label="Fat (g)"
+					type="number"
+					value={fatG}
+					oninput={(e) => (fatG = (e.currentTarget as HTMLInputElement).value)}
+					inputmode="decimal"
+					step="0.01"
+					required
+					no-asterisk
+				></md-outlined-text-field>
+				<p class="form-nutrient-sub">of which</p>
+				<md-outlined-text-field
+					id="saturatedFatG"
+					name="saturatedFatG"
+					label="Saturated fat (g)"
+					type="number"
+					value={saturatedFatG}
+					oninput={(e) => (saturatedFatG = (e.currentTarget as HTMLInputElement).value)}
+					inputmode="decimal"
+					step="0.01"
+					required
+					no-asterisk
+				></md-outlined-text-field>
+			</div>
+			<div class="form-row-tight">
+				<md-outlined-text-field
+					id="carbohydrateG"
+					name="carbohydrateG"
+					label="Carbohydrate (g)"
+					type="number"
+					value={carbohydrateG}
+					oninput={(e) => (carbohydrateG = (e.currentTarget as HTMLInputElement).value)}
+					inputmode="decimal"
+					step="0.01"
+					required
+					no-asterisk
+				></md-outlined-text-field>
+				<p class="form-nutrient-sub">of which</p>
+				<md-outlined-text-field
+					id="sugarsG"
+					name="sugarsG"
+					label="Sugars (g)"
+					type="number"
+					value={sugarsG}
+					oninput={(e) => (sugarsG = (e.currentTarget as HTMLInputElement).value)}
+					inputmode="decimal"
+					step="0.01"
+					required
+					no-asterisk
+				></md-outlined-text-field>
+			</div>
 			<md-outlined-text-field
 				id="fiberG"
 				name="fiberG"
@@ -279,9 +283,14 @@
 		box-sizing: border-box;
 	}
 	.form-nutrient-sub {
-		margin: 0 0 4px 8px;
+		margin: 0;
 		font-size: 0.75rem;
 		color: var(--md-sys-color-on-surface-variant, #49454f);
+	}
+	.form-row-tight {
+		display: flex;
+		flex-direction: column;
+		row-gap: 8px;
 	}
 	.form-input {
 		width: 100%;
