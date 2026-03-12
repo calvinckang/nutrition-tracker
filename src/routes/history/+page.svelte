@@ -158,18 +158,18 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 32px;
 	}
 	.day-card {
 		border-radius: 24px;
-		padding: 20px 20px;
-		background: var(--md-sys-color-surface-container, #fffbfe);
+		padding: 0;
+		background: none;
 	}
 	.day-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: baseline;
-		margin-bottom: 24px;
+		margin-bottom: 16px;
 	}
 	.day-title {
 		margin: 0;
@@ -199,7 +199,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
+		gap: 20px;
 	}
 	.meal-row {
 		display: flex;
@@ -210,12 +210,12 @@
 	.meal-main {
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
+		gap: 16px;
 		min-width: 0;
 		width: 100%;
-		padding: 16px;
-		background: var(--md-sys-color-surface, #f3edf7);
-		border-radius: 16px;
+		padding: 20px;
+		background: var(--md-sys-color-surface-container, #fffbfe);
+		border-radius: 24px;
 	}
 	.totals-item {
 		display: flex;
@@ -224,6 +224,9 @@
 	}
 	.meal-name {
 		margin: 0;
+		font-size: var(--md-sys-typescale-headline-small-size);
+		font-weight: var(--md-sys-typescale-headline-small-weight);
+		line-height: var(--md-sys-typescale-headline-small-line-height);
 	}
 	.meal-totals-grid {
 		display: grid;

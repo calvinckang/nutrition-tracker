@@ -289,6 +289,11 @@ body > div {
 	padding-bottom: 164px;
 }
 
+/* Foods add/edit forms should use the default 96px bottom padding */
+.main-content--foods:has(.form-page) {
+	padding-bottom: 96px;
+}
+
 .bottom-nav {
 	flex-shrink: 0;
 	position: fixed;
