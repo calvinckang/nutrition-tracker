@@ -163,7 +163,7 @@
 					autocomplete="off"
 				></md-outlined-text-field>
 				<input type="hidden" name="day" value="today" />
-				<md-outlined-button type="submit">Add meal</md-outlined-button>
+				<md-filled-button type="submit">Add meal</md-filled-button>
 			</form>
 		</header>
 
@@ -201,10 +201,10 @@
 										<div class="item-main">
 											<p class="item-name">
 												{item.food ? item.food.name : 'Food removed'}
-												{#if item.food?.brand}
-													<span class="item-brand">· {item.food.brand}</span>
-												{/if}
 											</p>
+											{#if item.food?.brand}
+												<p class="item-brand">{item.food.brand}</p>
+											{/if}
 											<p class="item-meta">
 												{formatNumber(item.amount)} {item.unit}
 											</p>
@@ -247,11 +247,10 @@
 							<input type="hidden" name="mealId" value={meal.id} />
 							<input type="hidden" name="foodEntryId" value={selectedFoodIdByMeal[meal.id] ?? ''} />
 							<div class="add-item-label">
-								<span>Food</span>
 								<div class="food-input-wrap">
 									<input
 										type="text"
-										placeholder="Start typing a food name"
+										placeholder="Select a food"
 										autocomplete="off"
 										aria-label="Food name"
 										aria-expanded={openFoodDropdownMealId === meal.id}
@@ -307,20 +306,19 @@
 								</div>
 							</div>
 							<div class="add-item-label">
-								<span>Amount{#if selectedUnits[meal.id]}<span class="amount-unit">({selectedUnits[meal.id]})</span>{/if}</span>
 								<md-outlined-text-field
 									aria-label="Amount"
 									name="amount"
+									label="Amount"
 									type="number"
 									required
 									no-asterisk
 									step="0.01"
 									inputmode="decimal"
 									min="0.01"
-									value="0"
 								></md-outlined-text-field>
 							</div>
-							<md-filled-button type="submit">Add item</md-filled-button>
+							<md-text-button type="submit">Add item</md-text-button>
 						</form>
 					</li>
 				{/each}
@@ -364,7 +362,7 @@
 		font-weight: 600;
 	}
 	.totals-value-number {
-		font-size: 1.4rem;
+		font-size: var(--md-sys-typescale-title-medium-size, 1.125rem);
 	}
 	.totals-value-unit {
 		font-size: 0.8rem;
@@ -433,7 +431,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
+		gap: 20px;
 	}
 	.meal-card {
 		border-radius: 24px;
@@ -460,7 +458,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
+		gap: 20px;
 	}
 	.item-row {
 		display: flex;
@@ -471,20 +469,22 @@
 	.item-main {
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
+		gap: 2px;
 		min-width: 0;
 	}
 	.item-name {
 		margin: 0;
-		font-size: 0.95rem;
+		font-size: var(--md-sys-typescale-title-medium-size, 1.125rem);
+		font-weight: var(--md-sys-typescale-title-medium-weight, 500);
 	}
 	.item-brand {
-		font-size: 0.85rem;
+		margin: 0;
+		font-size: 0.875rem;
 		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.item-meta {
 		margin: 0;
-		font-size: 0.8rem;
+		font-size: var(--md-sys-typescale-body-large-size, 1rem);
 		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.add-item-form {
@@ -611,6 +611,6 @@
 	}
 	md-filled-button {
 		width: 100%;
-		margin-top: 8px;
+		margin-top: 0px;
 	}
 </style>

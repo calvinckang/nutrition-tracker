@@ -134,7 +134,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
+		gap: 20px;
 	}
 	.food-item {
 		display: flex;
@@ -151,12 +151,16 @@
 		gap: 2px;
 		min-width: 0;
 	}
+	.food-item__name {
+		font-size: var(--md-sys-typescale-title-medium-size, 1.125rem);
+		font-weight: var(--md-sys-typescale-title-medium-weight, 500);
+	}
 	.food-item__brand {
 		font-size: 0.875rem;
 		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.food-item__meta {
-		font-size: 0.75rem;
+		font-size: var(--md-sys-typescale-body-large-size, 1rem);
 		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.food-item__actions {

@@ -181,7 +181,7 @@
 		gap: 4px;
 	}
 	.day-calories-number {
-		font-size: var(--md-sys-typescale-headline-small-size, 1.5rem);
+		font-size: var(--md-sys-typescale-title-medium-size, 1.125rem);
 		font-weight: 600;
 	}
 	.day-calories-unit {
@@ -199,7 +199,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 24px;
+		gap: 20px;
 	}
 	.meal-row {
 		display: flex;
@@ -237,7 +237,7 @@
 		gap: 4px;
 	}
 	.meal-totals-grid .totals-value-number {
-		font-size: var(--md-sys-typescale-headline-small-size, 1.5rem);
+		font-size: var(--md-sys-typescale-title-medium-size, 1.125rem);
 		font-weight: 600;
 	}
 	.meal-calories {
