@@ -38,8 +38,7 @@
 				This link is invalid or has expired. Request a new one from the sign-in page.
 			</p>
 			<p class="auth-links">
-				<a href="/forgot-password">Request new link</a>
-				·
+				<a href="/forgot-password">Request new link</a><br />
 				<a href="/sign-in">Sign in</a>
 			</p>
 		{:else if token}
@@ -122,6 +121,8 @@
 	.auth-links a {
 		color: var(--md-sys-color-primary, #6750a4);
 		text-decoration: none;
+		display: inline-block;
+		margin-bottom: 4px;
 	}
 	.auth-links a:hover {
 		text-decoration: underline;
