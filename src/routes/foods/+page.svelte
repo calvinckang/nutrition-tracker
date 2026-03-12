@@ -134,7 +134,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 12px;
 	}
 	.food-item {
 		display: flex;

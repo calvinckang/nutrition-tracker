@@ -199,7 +199,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 24px;
+		gap: 12px;
 	}
 	.meal-row {
 		display: flex;
@@ -213,6 +213,9 @@
 		gap: 8px;
 		min-width: 0;
 		width: 100%;
+		padding: 16px;
+		background: var(--md-sys-color-surface, #f3edf7);
+		border-radius: 16px;
 	}
 	.totals-item {
 		display: flex;

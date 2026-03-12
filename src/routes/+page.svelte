@@ -439,7 +439,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 24px;
+		gap: 20px;
 	}
 	.meal-card {
 		border-radius: 24px;
@@ -466,13 +466,16 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 8px;
 	}
 	.item-row {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		gap: 12px;
+		padding: 16px;
+		background: var(--md-sys-color-surface, #f3edf7);
+		border-radius: 16px;
 	}
 	.item-main {
 		display: flex;
