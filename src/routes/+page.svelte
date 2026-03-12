@@ -235,11 +235,17 @@
 							onsubmit={(e) => {
 								if (!selectedFoodIdByMeal[meal.id]) {
 									e.preventDefault();
+									foodInputValueByMeal[meal.id] = '';
 								}
 							}}
 							onkeydown={(e) => {
 								if (e.key !== 'Enter') return;
 								if (document.activeElement instanceof HTMLTextAreaElement) return;
+								const target = e.target as HTMLElement | null;
+								if (target && target.closest('.food-input-wrap') && !selectedFoodIdByMeal[meal.id]) {
+									e.preventDefault();
+									return;
+								}
 								e.preventDefault();
 								(e.currentTarget as HTMLFormElement).requestSubmit();
 							}}
@@ -248,9 +254,10 @@
 							<input type="hidden" name="foodEntryId" value={selectedFoodIdByMeal[meal.id] ?? ''} />
 							<div class="add-item-label">
 								<div class="food-input-wrap">
-									<input
+									<md-outlined-text-field
+										name="food"
+										label="Select food"
 										type="text"
-										placeholder="Select a food"
 										autocomplete="off"
 										aria-label="Food name"
 										aria-expanded={openFoodDropdownMealId === meal.id}
@@ -258,6 +265,7 @@
 										aria-autocomplete="list"
 										class="food-name-input"
 										required
+										no-asterisk
 										value={foodInputValueByMeal[meal.id] ?? ''}
 										oninput={(e) => handleFoodInput(meal.id, (e.currentTarget as HTMLInputElement).value)}
 										onfocus={() => {
@@ -265,7 +273,7 @@
 											openFoodDropdownMealId = meal.id;
 										}}
 										onblur={scheduleCloseDropdown}
-									/>
+									></md-outlined-text-field>
 									{#if (foodInputValueByMeal[meal.id] ?? '').trim()}
 										<button
 											type="button"
@@ -504,25 +512,7 @@
 		margin-left: 4px;
 	}
 	.food-name-input {
-		box-sizing: border-box;
 		width: 100%;
-		height: 56px;
-		padding: 16px 48px 16px 16px;
-		border-radius: 6px;
-		border: 1px solid var(--md-sys-color-outline, #79747e);
-		background: transparent;
-		font: inherit;
-		font-size: 1rem;
-		color: var(--md-sys-color-on-surface, #1d1b1f);
-	}
-	.food-name-input::placeholder {
-		color: var(--md-sys-color-on-surface-variant, #49454f);
-	}
-	.food-name-input:focus {
-		outline: none;
-		border-color: var(--md-sys-color-primary, #6750a4);
-		border-width: 2px;
-		padding: 15px 47px 15px 15px;
 	}
 	.food-name-input-clear {
 		position: absolute;
