@@ -42,6 +42,7 @@
 		}}
 	>
 		<div class="form-section">
+			<h3 class="form-subheading">Food</h3>
 			<md-outlined-text-field
 				id="name"
 				name="name"
@@ -239,15 +240,21 @@
 		width: 100%;
 		max-width: 440px;
 		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
 	}
 	.form-heading {
-		margin: 0 0 24px;
+		margin: 0;
 	}
 	.form-section {
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
 		margin-bottom: 24px;
+		padding: 20px;
+		border-radius: 24px;
+		background: var(--md-sys-color-surface-container, #fffbfe);
 	}
 	.form-subheading {
 		margin: 0 0 12px;
