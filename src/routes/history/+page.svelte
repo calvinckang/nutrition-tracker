@@ -77,6 +77,15 @@
 												</div>
 											</div>
 											<div class="totals-item">
+												<span class="totals-label">Sugars</span>
+												<div class="meal-totals-value">
+													<span class="totals-value-number"
+														>{formatNumber(meal.totals.sugarsG)}</span
+													>
+													<span class="totals-value-unit">g</span>
+												</div>
+											</div>
+											<div class="totals-item">
 												<span class="totals-label">Fat</span>
 												<div class="meal-totals-value">
 													<span class="totals-value-number"
@@ -90,15 +99,6 @@
 												<div class="meal-totals-value">
 													<span class="totals-value-number"
 														>{formatNumber(meal.totals.saturatedFatG)}</span
-													>
-													<span class="totals-value-unit">g</span>
-												</div>
-											</div>
-											<div class="totals-item">
-												<span class="totals-label">Sugars</span>
-												<div class="meal-totals-value">
-													<span class="totals-value-number"
-														>{formatNumber(meal.totals.sugarsG)}</span
 													>
 													<span class="totals-value-unit">g</span>
 												</div>
@@ -199,7 +199,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 24px;
 	}
 	.meal-row {
 		display: flex;
@@ -224,7 +224,7 @@
 	}
 	.meal-totals-grid {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		column-gap: 16px;
 		row-gap: 8px;
 		width: 100%;

@@ -105,6 +105,13 @@
 				</span>
 			</div>
 			<div class="totals-item">
+				<span class="totals-label">Sugars</span>
+				<span class="totals-value">
+					<span class="totals-value-number">{formatNumber(dailyTotals.sugarsG)}</span>
+					<span class="totals-value-unit">g</span>
+				</span>
+			</div>
+			<div class="totals-item">
 				<span class="totals-label">Fat</span>
 				<span class="totals-value">
 					<span class="totals-value-number">{formatNumber(dailyTotals.fatG)}</span>
@@ -115,13 +122,6 @@
 				<span class="totals-label">Saturated</span>
 				<span class="totals-value">
 					<span class="totals-value-number">{formatNumber(dailyTotals.saturatedFatG)}</span>
-					<span class="totals-value-unit">g</span>
-				</span>
-			</div>
-			<div class="totals-item">
-				<span class="totals-label">Sugars</span>
-				<span class="totals-value">
-					<span class="totals-value-number">{formatNumber(dailyTotals.sugarsG)}</span>
 					<span class="totals-value-unit">g</span>
 				</span>
 			</div>
@@ -378,7 +378,7 @@
 	}
 	.totals-grid {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		column-gap: 16px;
 		row-gap: 16px;
 	}
@@ -439,7 +439,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 24px;
 	}
 	.meal-card {
 		border-radius: 24px;
