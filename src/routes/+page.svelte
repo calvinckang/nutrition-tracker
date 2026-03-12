@@ -315,9 +315,9 @@
 							</div>
 							<div class="add-item-label">
 								<md-filled-text-field
-									aria-label="Amount"
+									aria-label={`Amount${selectedUnits[meal.id] ? ` (${selectedUnits[meal.id]})` : ''}`}
 									name="amount"
-									label="Amount"
+									label={`Amount${selectedUnits[meal.id] ? ` (${selectedUnits[meal.id]})` : ''}`}
 									type="number"
 									required
 									no-asterisk

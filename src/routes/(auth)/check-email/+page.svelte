@@ -129,7 +129,7 @@
 		<p class="auth-body">
 			We’ve sent you a link to confirm your account. Click it and you’re good to go.
 		</p>
-		<p class="auth-subtext">Didn’t get it? Check spam or resend.</p>
+		<p class="auth-body auth-subtext">Didn’t get it? Check spam or resend.</p>
 		<form
 			class="auth-form"
 			onsubmit={(e) => {
@@ -146,7 +146,7 @@
 			</md-filled-button>
 		</form>
 		{#if resendMessage}
-			<p class="auth-feedback">{resendMessage}</p>
+			<p class="auth-body auth-feedback">{resendMessage}</p>
 		{/if}
 		<p class="auth-links">
 			<a href="/sign-in">Back to sign in</a>
@@ -176,13 +176,11 @@
 		margin: 0 0 24px;
 	}
 	.auth-body {
-		margin: 0 0 8px;
+		margin: 0 0 16px;
 		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.auth-subtext {
 		margin: 0 0 24px;
-		font-size: 0.875rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.auth-form {
 		display: flex;
@@ -194,8 +192,6 @@
 	}
 	.auth-feedback {
 		margin: 16px 0 0;
-		font-size: 0.875rem;
-		color: var(--md-sys-color-primary, #6750a4);
 	}
 	.auth-links {
 		margin: 24px 0 0;

@@ -76,12 +76,7 @@ md-outlined-button {
 	padding-right: 16px;
 }
 
-/* Global shape & colors for filled inputs (text field + select) */
-md-filled-text-field,
-md-filled-select {
-	--md-filled-text-field-container-shape: 6px;
-}
-
+/* Global colors for filled inputs (text field + select) */
 [data-theme='light'] md-filled-text-field,
 [data-theme='light'] md-filled-select {
 	--md-filled-text-field-input-text-color: var(--md-sys-color-on-surface);
@@ -90,11 +85,6 @@ md-filled-select {
 [data-theme='dark'] md-filled-text-field,
 [data-theme='dark'] md-filled-select {
 	--md-filled-text-field-input-text-color: var(--md-sys-color-on-surface);
-}
-
-
-.food-name-input {
-	border-radius: 6px;
 }
 
 /* Page header: title + subtitle/date in a row, space-between, 1rem gap */
