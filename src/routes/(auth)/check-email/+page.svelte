@@ -130,15 +130,21 @@
 			We’ve sent you a link to confirm your account. Click it and you’re good to go.
 		</p>
 		<p class="auth-subtext">Didn’t get it? Check spam or resend.</p>
-		<md-filled-button
-			onclick={resend}
-			onkeydown={(e: KeyboardEvent) => e.key === 'Enter' && resend()}
-			disabled={resendLoading || !email}
-			role="button"
-			tabindex="0"
+		<form
+			class="auth-form"
+			onsubmit={(e) => {
+				e.preventDefault();
+				resend();
+			}}
 		>
-			{resendLoading ? 'Sending…' : 'Resend email'}
-		</md-filled-button>
+			<md-filled-button
+				type="submit"
+				disabled={resendLoading || !email}
+				bind:this={buttonEl}
+			>
+				{resendLoading ? 'Sending…' : 'Resend email'}
+			</md-filled-button>
+		</form>
 		{#if resendMessage}
 			<p class="auth-feedback">{resendMessage}</p>
 		{/if}
@@ -177,6 +183,14 @@
 		margin: 0 0 24px;
 		font-size: 0.875rem;
 		color: var(--md-sys-color-on-surface-variant, #49454f);
+	}
+	.auth-form {
+		display: flex;
+		flex-direction: column;
+	}
+	.auth-form :global(md-filled-button) {
+		width: 100%;
+		margin-top: 8px;
 	}
 	.auth-feedback {
 		margin: 16px 0 0;
