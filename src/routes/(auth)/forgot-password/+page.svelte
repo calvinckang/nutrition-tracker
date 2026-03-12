@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { authClient } from '$lib/auth-client';
-	import '@material/web/textfield/outlined-text-field.js';
+	import '@material/web/textfield/filled-text-field.js';
 	import '@material/web/button/filled-button.js';
 
 	let email = $state('');
@@ -42,7 +42,7 @@
 				(e.currentTarget as HTMLFormElement).requestSubmit();
 			}}
 		>
-			<md-outlined-text-field
+			<md-filled-text-field
 				id="forgot-email"
 				label="Email"
 				type="email"
@@ -52,7 +52,7 @@
 				oninput={(e) => (email = (e.target as { value: string })?.value ?? '')}
 				disabled={loading}
 				autocomplete="email"
-			></md-outlined-text-field>
+			></md-filled-text-field>
 			{#if error}<p class="auth-error">{error}</p>{/if}
 			<md-filled-button type="submit" disabled={loading}>
 				{loading ? 'Sending…' : 'Send link'}

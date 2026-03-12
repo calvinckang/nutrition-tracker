@@ -76,13 +76,23 @@ md-outlined-button {
 	padding-right: 16px;
 }
 
-/* Global border radius for all outlined inputs (6px) */
-md-outlined-text-field {
-	--md-outlined-text-field-container-shape: 6px;
+/* Global shape & colors for filled inputs (text field + select) */
+md-filled-text-field,
+md-filled-select {
+	--md-filled-text-field-container-shape: 6px;
 }
-md-outlined-select {
-	--md-outlined-select-text-field-container-shape: 6px;
+
+[data-theme='light'] md-filled-text-field,
+[data-theme='light'] md-filled-select {
+	--md-filled-text-field-input-text-color: var(--md-sys-color-on-surface);
 }
+
+[data-theme='dark'] md-filled-text-field,
+[data-theme='dark'] md-filled-select {
+	--md-filled-text-field-input-text-color: var(--md-sys-color-on-surface);
+}
+
+
 .food-name-input {
 	border-radius: 6px;
 }
@@ -123,6 +133,9 @@ md-outlined-select {
 	--md-sys-color-outline-variant: #49454f;
 	--md-sys-color-inverse-surface: #e6e1e5;
 	--md-sys-color-inverse-on-surface: #313033;
+
+	--md-filled-text-field-container-color: var(--md-sys-color-surface-container);
+	--md-filled-select-text-field-container-color: var(--md-sys-color-surface-container);
 }
 
 /* Base surfaces */

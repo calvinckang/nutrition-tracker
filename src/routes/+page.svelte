@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { formatNumber } from '$lib/utils/format';
-	import '@material/web/textfield/outlined-text-field.js';
+	import '@material/web/textfield/filled-text-field.js';
 	import '@material/web/button/filled-button.js';
 	import '@material/web/button/outlined-button.js';
 	import '@material/web/button/text-button.js';
@@ -156,12 +156,12 @@
 					(e.currentTarget as HTMLFormElement).requestSubmit();
 				}}
 			>
-				<md-outlined-text-field
+				<md-filled-text-field
 					name="name"
 					class="meal-name-input"
 					label="Meal name (optional)"
 					autocomplete="off"
-				></md-outlined-text-field>
+				></md-filled-text-field>
 				<input type="hidden" name="day" value="today" />
 				<md-filled-button type="submit">Add meal</md-filled-button>
 			</form>
@@ -254,7 +254,7 @@
 							<input type="hidden" name="foodEntryId" value={selectedFoodIdByMeal[meal.id] ?? ''} />
 							<div class="add-item-label">
 								<div class="food-input-wrap">
-									<md-outlined-text-field
+								<md-filled-text-field
 										name="food"
 										label="Select food"
 										type="text"
@@ -273,7 +273,7 @@
 											openFoodDropdownMealId = meal.id;
 										}}
 										onblur={scheduleCloseDropdown}
-									></md-outlined-text-field>
+									></md-filled-text-field>
 									{#if (foodInputValueByMeal[meal.id] ?? '').trim()}
 										<button
 											type="button"
@@ -314,7 +314,7 @@
 								</div>
 							</div>
 							<div class="add-item-label">
-								<md-outlined-text-field
+								<md-filled-text-field
 									aria-label="Amount"
 									name="amount"
 									label="Amount"
@@ -324,7 +324,7 @@
 									step="0.01"
 									inputmode="decimal"
 									min="0.01"
-								></md-outlined-text-field>
+								></md-filled-text-field>
 							</div>
 							<md-text-button type="submit">Add item</md-text-button>
 						</form>
@@ -462,11 +462,11 @@
 	}
 	.items-list {
 		list-style: none;
-		margin: 0 0 10px;
+		margin: 0 0 0px;
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
+		gap: 12px;
 	}
 	.item-row {
 		display: flex;
@@ -502,7 +502,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
-		margin-top: 16px;
+		margin-top: 24px;
 	}
 	.add-item-label {
 		display: flex;

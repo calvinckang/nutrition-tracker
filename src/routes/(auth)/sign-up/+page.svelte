@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { authClient } from '$lib/auth-client';
-	import '@material/web/textfield/outlined-text-field.js';
+	import '@material/web/textfield/filled-text-field.js';
 	import '@material/web/button/filled-button.js';
 
 	let name = $state('');
@@ -49,7 +49,7 @@
 			(e.currentTarget as HTMLFormElement).requestSubmit();
 		}}
 	>
-		<md-outlined-text-field
+		<md-filled-text-field
 			id="signup-name"
 			label="Name"
 			type="text"
@@ -59,8 +59,8 @@
 			oninput={(e) => (name = (e.target as { value: string })?.value ?? '')}
 			disabled={loading}
 			autocomplete="name"
-		></md-outlined-text-field>
-		<md-outlined-text-field
+		></md-filled-text-field>
+		<md-filled-text-field
 			id="signup-email"
 			label="Email"
 			type="email"
@@ -70,8 +70,8 @@
 			oninput={(e) => (email = (e.target as { value: string })?.value ?? '')}
 			disabled={loading}
 			autocomplete="email"
-		></md-outlined-text-field>
-		<md-outlined-text-field
+		></md-filled-text-field>
+		<md-filled-text-field
 			id="signup-password"
 			label="Password"
 			type="password"
@@ -81,7 +81,7 @@
 			oninput={(e) => (password = (e.target as { value: string })?.value ?? '')}
 			disabled={loading}
 			autocomplete="new-password"
-		></md-outlined-text-field>
+		></md-filled-text-field>
 		{#if error}
 			<p class="auth-error">{error}</p>
 		{/if}

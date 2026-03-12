@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { authClient } from '$lib/auth-client';
-	import '@material/web/textfield/outlined-text-field.js';
+	import '@material/web/textfield/filled-text-field.js';
 	import '@material/web/button/filled-button.js';
 
 	let newPassword = $state('');
@@ -47,7 +47,7 @@
 				(e.currentTarget as HTMLFormElement).requestSubmit();
 			}}
 		>
-			<md-outlined-text-field
+			<md-filled-text-field
 				id="reset-password"
 				label="New password"
 				type="password"
@@ -57,7 +57,7 @@
 				oninput={(e) => (newPassword = (e.target as { value: string })?.value ?? '')}
 				disabled={loading}
 				autocomplete="new-password"
-			></md-outlined-text-field>
+			></md-filled-text-field>
 			{#if error}
 				<p class="auth-error">{error}</p>
 			{/if}

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { authClient } from '$lib/auth-client';
-	import { getThemeMode, setThemeMode, type ThemeMode } from '$lib/theme';
-	import '@material/web/button/outlined-button.js';
-	import '@material/web/select/outlined-select.js';
-	import '@material/web/select/select-option.js';
+import { goto } from '$app/navigation';
+import { authClient } from '$lib/auth-client';
+import { getThemeMode, setThemeMode, type ThemeMode } from '$lib/theme';
+import '@material/web/button/outlined-button.js';
+import '@material/web/select/filled-select.js';
+import '@material/web/select/select-option.js';
 
 	let selectedMode = $state<ThemeMode>('system');
 
@@ -33,7 +33,7 @@
 
 	<section aria-label="Theme" class="settings-section">
 		<div class="theme-select-container">
-			<md-outlined-select
+			<md-filled-select
 				label="Theme"
 				value={selectedMode}
 				oninput={handleThemeChange}
@@ -47,7 +47,7 @@
 				<md-select-option value="dark">
 					<div slot="headline">Dark</div>
 				</md-select-option>
-			</md-outlined-select>
+			</md-filled-select>
 		</div>
 	</section>
 
@@ -74,7 +74,7 @@
 	.theme-select-container {
 		height: 100%;
 	}
-	.theme-select-container md-outlined-select {
+	.theme-select-container md-filled-select {
 		width: 100%;
 	}
 	.settings-section:last-child {

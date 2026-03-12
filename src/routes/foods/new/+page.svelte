@@ -2,8 +2,8 @@
 	import { goto } from '$app/navigation';
 	import '@material/web/button/filled-button.js';
 	import '@material/web/button/outlined-button.js';
-	import '@material/web/textfield/outlined-text-field.js';
-	import '@material/web/select/outlined-select.js';
+	import '@material/web/textfield/filled-text-field.js';
+	import '@material/web/select/filled-select.js';
 	import '@material/web/select/select-option.js';
 
 	let { data } = $props();
@@ -43,7 +43,7 @@
 	>
 		<div class="form-section">
 			<h3 class="form-subheading">Food</h3>
-			<md-outlined-text-field
+			<md-filled-text-field
 				id="name"
 				name="name"
 				label="Name"
@@ -52,16 +52,16 @@
 				oninput={(e) => (name = (e.currentTarget as HTMLInputElement).value)}
 				required
 				no-asterisk
-			></md-outlined-text-field>
-			<md-outlined-text-field
+			></md-filled-text-field>
+			<md-filled-text-field
 				id="brand"
 				name="brand"
 				label="Brand (optional)"
 				type="text"
 				value={brand}
 				oninput={(e) => (brand = (e.currentTarget as HTMLInputElement).value)}
-			></md-outlined-text-field>
-			<md-outlined-select
+			></md-filled-text-field>
+			<md-filled-select
 				name="supermarket"
 				label="Supermarket (optional)"
 				value={supermarket}
@@ -76,8 +76,8 @@
 				<md-select-option value="Carrefour">
 					<div slot="headline">Carrefour</div>
 				</md-select-option>
-			</md-outlined-select>
-			<md-outlined-text-field
+			</md-filled-select>
+			<md-filled-text-field
 				id="ingredients"
 				name="ingredients"
 				label="Ingredients (optional)"
@@ -85,19 +85,19 @@
 				rows="2"
 				value={ingredients}
 				oninput={(e) => (ingredients = (e.currentTarget as HTMLInputElement).value)}
-			></md-outlined-text-field>
-			<md-outlined-text-field
+			></md-filled-text-field>
+			<md-filled-text-field
 				id="comment"
 				name="comment"
 				label="Comment (optional)"
 				type="text"
 				value={comment}
 				oninput={(e) => (comment = (e.currentTarget as HTMLInputElement).value)}
-			></md-outlined-text-field>
+			></md-filled-text-field>
 		</div>
 		<div class="form-section">
 			<h3 class="form-subheading">Serving</h3>
-			<md-outlined-text-field
+			<md-filled-text-field
 				id="servingAmount"
 				name="servingAmount"
 				label="Serving amount"
@@ -106,8 +106,8 @@
 				oninput={(e) => (servingAmount = (e.currentTarget as HTMLInputElement).value)}
 				inputmode="decimal"
 				step="0.01"
-			></md-outlined-text-field>
-			<md-outlined-select
+			></md-filled-text-field>
+			<md-filled-select
 				name="servingUnit"
 				label="Serving unit"
 				value={servingUnit}
@@ -125,11 +125,11 @@
 				<md-select-option value="serving">
 					<div slot="headline">serving</div>
 				</md-select-option>
-			</md-outlined-select>
+			</md-filled-select>
 		</div>
 		<div class="form-section">
 			<h3 class="form-subheading">Per serving</h3>
-			<md-outlined-text-field
+			<md-filled-text-field
 				id="caloriesKcal"
 				name="caloriesKcal"
 				label="Calories (kcal)"
@@ -140,9 +140,9 @@
 				step="0.01"
 				required
 				no-asterisk
-			></md-outlined-text-field>
+			></md-filled-text-field>
 			<div class="form-row-tight">
-				<md-outlined-text-field
+				<md-filled-text-field
 					id="fatG"
 					name="fatG"
 					label="Fat (g)"
@@ -153,9 +153,9 @@
 					step="0.01"
 					required
 					no-asterisk
-				></md-outlined-text-field>
+				></md-filled-text-field>
 				<p class="form-nutrient-sub">of which</p>
-				<md-outlined-text-field
+				<md-filled-text-field
 					id="saturatedFatG"
 					name="saturatedFatG"
 					label="Saturated fat (g)"
@@ -166,10 +166,10 @@
 					step="0.01"
 					required
 					no-asterisk
-				></md-outlined-text-field>
+				></md-filled-text-field>
 			</div>
 			<div class="form-row-tight">
-				<md-outlined-text-field
+				<md-filled-text-field
 					id="carbohydrateG"
 					name="carbohydrateG"
 					label="Carbohydrate (g)"
@@ -180,9 +180,9 @@
 					step="0.01"
 					required
 					no-asterisk
-				></md-outlined-text-field>
+				></md-filled-text-field>
 				<p class="form-nutrient-sub">of which</p>
-				<md-outlined-text-field
+				<md-filled-text-field
 					id="sugarsG"
 					name="sugarsG"
 					label="Sugars (g)"
@@ -193,9 +193,9 @@
 					step="0.01"
 					required
 					no-asterisk
-				></md-outlined-text-field>
+				></md-filled-text-field>
 			</div>
-			<md-outlined-text-field
+			<md-filled-text-field
 				id="fiberG"
 				name="fiberG"
 				label="Fiber (g)"
@@ -206,8 +206,8 @@
 				step="0.01"
 				required
 				no-asterisk
-			></md-outlined-text-field>
-			<md-outlined-text-field
+			></md-filled-text-field>
+			<md-filled-text-field
 				id="proteinG"
 				name="proteinG"
 				label="Protein (g)"
@@ -218,8 +218,8 @@
 				step="0.01"
 				required
 				no-asterisk
-			></md-outlined-text-field>
-			<md-outlined-text-field
+			></md-filled-text-field>
+			<md-filled-text-field
 				id="saltG"
 				name="saltG"
 				label="Salt (g)"
@@ -230,7 +230,7 @@
 				step="0.01"
 				required
 				no-asterisk
-			></md-outlined-text-field>
+			></md-filled-text-field>
 		</div>
 		<div class="form-actions">
 			<md-filled-button type="submit">Save</md-filled-button>
@@ -300,8 +300,8 @@
 		font-size: 1rem;
 		box-sizing: border-box;
 	}
-	.form-page md-outlined-text-field,
-	.form-page md-outlined-select {
+	.form-page md-filled-text-field,
+	.form-page md-filled-select {
 		width: 100%;
 	}
 	.form-actions {
