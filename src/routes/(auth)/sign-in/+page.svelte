@@ -18,10 +18,11 @@
 			{ email, password, callbackURL: '/' },
 			{
 				onError: (ctx) => {
-					error = ctx.error?.message ?? 'Email or password doesn’t look right. Try again.';
 					if (ctx.error?.status === 403) {
-						error = 'Please verify your email first. Check your inbox for the link.';
+						goto(`/check-email?email=${encodeURIComponent(email)}`);
+						return;
 					}
+					error = ctx.error?.message ?? 'Email or password doesn’t look right. Try again.';
 				}
 			}
 		);

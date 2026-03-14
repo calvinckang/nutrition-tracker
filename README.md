@@ -40,3 +40,13 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+## Deploying to Netlify
+
+For sign-up and password-reset emails to work in production, set these in **Netlify → Site settings → Environment variables** (and redeploy):
+
+- **RESEND_API_KEY** – Your [Resend](https://resend.com) API key (required for sending verification and reset emails).
+- **EMAIL_FROM** – Sender address, e.g. `Nutrimaxxing <noreply@yourdomain.com>` (optional; defaults to Resend’s onboarding address).
+- **ORIGIN** – Your site URL, e.g. `https://your-app.netlify.app` (required for auth redirects).
+- **BETTER_AUTH_SECRET** – Same value as in your local `.env`.
+- **DATABASE_URL** – Your Neon (or other Postgres) connection string.
