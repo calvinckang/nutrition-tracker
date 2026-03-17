@@ -44,7 +44,7 @@
 	{#if allDays.length === 0 && !hasMore}
 		<div class="empty-state-wrap">
 			<div class="empty-state">
-				<span class="empty-state-icon material-symbols-outlined" aria-hidden="true">nutrition</span>
+				<span class="empty-state-icon material-symbols-outlined" aria-hidden="true">restaurant</span>
 				<p class="empty-text">No meals yet.</p>
 			</div>
 		</div>

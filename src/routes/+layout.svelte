@@ -16,7 +16,7 @@
 	const navItems = [
 		{ label: 'Today', href: '/', icon: 'today' },
 		{ label: 'History', href: '/history', icon: 'calendar_month' },
-		{ label: 'Foods', href: '/foods', icon: 'restaurant' },
+		{ label: 'Foods', href: '/foods', icon: 'avocado_bean' },
 		{ label: 'Settings', href: '/settings', icon: 'settings' }
 	];
 

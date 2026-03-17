@@ -180,7 +180,7 @@
 
 		{#if meals.length === 0}
 			<div class="empty-state">
-				<span class="empty-state-icon material-symbols-outlined" aria-hidden="true">nutrition</span>
+				<span class="empty-state-icon material-symbols-outlined" aria-hidden="true">restaurant</span>
 				<p class="empty-text">Nothing logged yet today.</p>
 			</div>
 		{:else}
