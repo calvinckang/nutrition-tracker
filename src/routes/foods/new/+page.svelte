@@ -22,6 +22,23 @@
 	let fiberG = $state('');
 	let proteinG = $state('');
 	let saltG = $state('');
+
+let servingAmountError = $state('');
+let caloriesKcalError = $state('');
+let fatGError = $state('');
+let saturatedFatGError = $state('');
+let carbohydrateGError = $state('');
+let sugarsGError = $state('');
+let fiberGError = $state('');
+let proteinGError = $state('');
+let saltGError = $state('');
+
+function normalizeDecimal(value: string): string {
+	const trimmed = value.trim().replace(',', '.');
+	if (!trimmed) return '';
+	if (!/^\d+(\.\d+)?$/.test(trimmed)) return '';
+	return trimmed;
+}
 </script>
 
 <svelte:head>
@@ -34,6 +51,47 @@
 	</header>
 	<form
 		method="POST"
+		onsubmit={(e) => {
+			const form = e.currentTarget as HTMLFormElement;
+			let hasError = false;
+
+			const normalizeAndValidate = (
+				name: string,
+				required: boolean,
+				setError: (msg: string) => void
+			) => {
+				const input = form.elements.namedItem(name) as HTMLInputElement | null;
+				if (!input) return;
+				const raw = input.value;
+				const normalized = normalizeDecimal(raw);
+				if (required && !normalized) {
+					hasError = true;
+					setError('Enter a valid number.');
+					return;
+				}
+				if (!required && !normalized && raw.trim() !== '') {
+					hasError = true;
+					setError('Enter a valid number.');
+					return;
+				}
+				setError('');
+				input.value = normalized;
+			};
+
+			normalizeAndValidate('servingAmount', false, (m) => (servingAmountError = m));
+			normalizeAndValidate('caloriesKcal', true, (m) => (caloriesKcalError = m));
+			normalizeAndValidate('fatG', true, (m) => (fatGError = m));
+			normalizeAndValidate('saturatedFatG', true, (m) => (saturatedFatGError = m));
+			normalizeAndValidate('carbohydrateG', true, (m) => (carbohydrateGError = m));
+			normalizeAndValidate('sugarsG', true, (m) => (sugarsGError = m));
+			normalizeAndValidate('fiberG', true, (m) => (fiberGError = m));
+			normalizeAndValidate('proteinG', true, (m) => (proteinGError = m));
+			normalizeAndValidate('saltG', true, (m) => (saltGError = m));
+
+			if (hasError) {
+				e.preventDefault();
+			}
+		}}
 		onkeydown={(e) => {
 			if (e.key !== 'Enter') return;
 			if (document.activeElement instanceof HTMLTextAreaElement) return;
@@ -101,11 +159,26 @@
 				id="servingAmount"
 				name="servingAmount"
 				label="Serving amount"
-				type="number"
+				type="text"
 				value={servingAmount}
 				oninput={(e) => (servingAmount = (e.currentTarget as HTMLInputElement).value)}
 				inputmode="decimal"
 				step="0.01"
+				error={Boolean(servingAmountError)}
+				errorText={servingAmountError}
+				onchange={(e) => {
+					const input = e.target as HTMLInputElement | null;
+					if (!input) return;
+					const raw = input.value;
+					const normalized = normalizeDecimal(raw);
+					if (!normalized && raw.trim() !== '') {
+						servingAmountError = 'Enter a valid number.';
+					} else {
+						servingAmountError = '';
+					}
+					input.value = normalized;
+					servingAmount = input.value;
+				}}
 			></md-filled-text-field>
 			<md-filled-select
 				name="servingUnit"
@@ -133,39 +206,84 @@
 				id="caloriesKcal"
 				name="caloriesKcal"
 				label="Calories (kcal)"
-				type="number"
+				type="text"
 				value={caloriesKcal}
 				oninput={(e) => (caloriesKcal = (e.currentTarget as HTMLInputElement).value)}
 				inputmode="decimal"
 				step="0.01"
 				required
 				no-asterisk
+				error={Boolean(caloriesKcalError)}
+				errorText={caloriesKcalError}
+				onchange={(e) => {
+					const input = e.target as HTMLInputElement | null;
+					if (!input) return;
+					const raw = input.value;
+					const normalized = normalizeDecimal(raw);
+					if (!normalized) {
+						caloriesKcalError = 'Enter a valid number.';
+					} else {
+						caloriesKcalError = '';
+					}
+					input.value = normalized;
+					caloriesKcal = input.value;
+				}}
 			></md-filled-text-field>
 			<div class="form-row-tight">
 				<md-filled-text-field
 					id="fatG"
 					name="fatG"
 					label="Fat (g)"
-					type="number"
+					type="text"
 					value={fatG}
 					oninput={(e) => (fatG = (e.currentTarget as HTMLInputElement).value)}
 					inputmode="decimal"
 					step="0.01"
 					required
 					no-asterisk
+					error={Boolean(fatGError)}
+					errorText={fatGError}
+					onchange={(e) => {
+						const input = e.target as HTMLInputElement | null;
+						if (!input) return;
+						const raw = input.value;
+						const normalized = normalizeDecimal(raw);
+						if (!normalized) {
+							fatGError = 'Enter a valid number.';
+						} else {
+							fatGError = '';
+						}
+						input.value = normalized;
+						fatG = input.value;
+					}}
 				></md-filled-text-field>
 				<p class="form-nutrient-sub">of which</p>
 				<md-filled-text-field
 					id="saturatedFatG"
 					name="saturatedFatG"
 					label="Saturated fat (g)"
-					type="number"
+					type="text"
 					value={saturatedFatG}
 					oninput={(e) => (saturatedFatG = (e.currentTarget as HTMLInputElement).value)}
 					inputmode="decimal"
 					step="0.01"
 					required
 					no-asterisk
+					error={Boolean(saturatedFatGError)}
+					errorText={saturatedFatGError}
+					onchange={(e) => {
+						const input = e.target as HTMLInputElement | null;
+						if (!input) return;
+						const raw = input.value;
+						const normalized = normalizeDecimal(raw);
+						if (!normalized) {
+							saturatedFatGError = 'Enter a valid number.';
+						} else {
+							saturatedFatGError = '';
+						}
+						input.value = normalized;
+						saturatedFatG = input.value;
+					}}
 				></md-filled-text-field>
 			</div>
 			<div class="form-row-tight">
@@ -173,63 +291,138 @@
 					id="carbohydrateG"
 					name="carbohydrateG"
 					label="Carbohydrate (g)"
-					type="number"
+					type="text"
 					value={carbohydrateG}
 					oninput={(e) => (carbohydrateG = (e.currentTarget as HTMLInputElement).value)}
 					inputmode="decimal"
 					step="0.01"
 					required
 					no-asterisk
+					error={Boolean(carbohydrateGError)}
+					errorText={carbohydrateGError}
+					onchange={(e) => {
+						const input = e.target as HTMLInputElement | null;
+						if (!input) return;
+						const raw = input.value;
+						const normalized = normalizeDecimal(raw);
+						if (!normalized) {
+							carbohydrateGError = 'Enter a valid number.';
+						} else {
+							carbohydrateGError = '';
+						}
+						input.value = normalized;
+						carbohydrateG = input.value;
+					}}
 				></md-filled-text-field>
 				<p class="form-nutrient-sub">of which</p>
 				<md-filled-text-field
 					id="sugarsG"
 					name="sugarsG"
 					label="Sugars (g)"
-					type="number"
+					type="text"
 					value={sugarsG}
 					oninput={(e) => (sugarsG = (e.currentTarget as HTMLInputElement).value)}
 					inputmode="decimal"
 					step="0.01"
 					required
 					no-asterisk
+					error={Boolean(sugarsGError)}
+					errorText={sugarsGError}
+					onchange={(e) => {
+						const input = e.target as HTMLInputElement | null;
+						if (!input) return;
+						const raw = input.value;
+						const normalized = normalizeDecimal(raw);
+						if (!normalized) {
+							sugarsGError = 'Enter a valid number.';
+						} else {
+							sugarsGError = '';
+						}
+						input.value = normalized;
+						sugarsG = input.value;
+					}}
 				></md-filled-text-field>
 			</div>
 			<md-filled-text-field
 				id="fiberG"
 				name="fiberG"
 				label="Fiber (g)"
-				type="number"
+			type="text"
 				value={fiberG}
 				oninput={(e) => (fiberG = (e.currentTarget as HTMLInputElement).value)}
 				inputmode="decimal"
 				step="0.01"
 				required
 				no-asterisk
+			error={Boolean(fiberGError)}
+			errorText={fiberGError}
+			onchange={(e) => {
+				const input = e.target as HTMLInputElement | null;
+				if (!input) return;
+				const raw = input.value;
+				const normalized = normalizeDecimal(raw);
+				if (!normalized) {
+					fiberGError = 'Enter a valid number.';
+				} else {
+					fiberGError = '';
+				}
+				input.value = normalized;
+				fiberG = input.value;
+			}}
 			></md-filled-text-field>
 			<md-filled-text-field
 				id="proteinG"
 				name="proteinG"
 				label="Protein (g)"
-				type="number"
+			type="text"
 				value={proteinG}
 				oninput={(e) => (proteinG = (e.currentTarget as HTMLInputElement).value)}
 				inputmode="decimal"
 				step="0.01"
 				required
 				no-asterisk
+			error={Boolean(proteinGError)}
+			errorText={proteinGError}
+			onchange={(e) => {
+				const input = e.target as HTMLInputElement | null;
+				if (!input) return;
+				const raw = input.value;
+				const normalized = normalizeDecimal(raw);
+				if (!normalized) {
+					proteinGError = 'Enter a valid number.';
+				} else {
+					proteinGError = '';
+				}
+				input.value = normalized;
+				proteinG = input.value;
+			}}
 			></md-filled-text-field>
 			<md-filled-text-field
 				id="saltG"
 				name="saltG"
 				label="Salt (g)"
-				type="number"
+			type="text"
 				value={saltG}
 				oninput={(e) => (saltG = (e.currentTarget as HTMLInputElement).value)}
 				inputmode="decimal"
 				step="0.01"
 				required
 				no-asterisk
+			error={Boolean(saltGError)}
+			errorText={saltGError}
+			onchange={(e) => {
+				const input = e.target as HTMLInputElement | null;
+				if (!input) return;
+				const raw = input.value;
+				const normalized = normalizeDecimal(raw);
+				if (!normalized) {
+					saltGError = 'Enter a valid number.';
+				} else {
+					saltGError = '';
+				}
+				input.value = normalized;
+				saltG = input.value;
+			}}
 			></md-filled-text-field>
 		</div>
 		<div class="form-actions">

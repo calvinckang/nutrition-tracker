@@ -132,6 +132,17 @@ md-outlined-button {
 	--md-dialog-container-color: var(--md-sys-color-surface-container);
 }
 
+/* Hide browser spin buttons for numeric Material text fields; users type values directly */
+md-filled-text-field input[type='number']::-webkit-outer-spin-button,
+md-filled-text-field input[type='number']::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+md-filled-text-field input[type='number'] {
+	-moz-appearance: textfield;
+}
+
 /* Base surfaces */
 [data-theme='light'] body {
 	background-color: var(--md-sys-color-surface);

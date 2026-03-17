@@ -18,6 +18,14 @@
 	const foodInputValueByMeal = $state<Record<string, string>>({});
 	const foodMenuWidthByMeal = $state<Record<string, number>>({});
 	let openFoodDropdownMealId = $state<string | null>(null);
+	const amountErrorByMeal = $state<Record<string, string>>({});
+
+	function normalizeDecimal(value: string): string {
+		const trimmed = value.trim().replace(',', '.');
+		if (!trimmed) return '';
+		if (!/^\d+(\.\d+)?$/.test(trimmed)) return '';
+		return trimmed;
+	}
 
 	function foodLabel(food: { name: string; brand?: string | null }) {
 		return food.brand ? `${food.name} – ${food.brand}` : food.name;
@@ -224,9 +232,25 @@
 							action="?/addItem"
 							class="add-item-form"
 							onsubmit={(e) => {
+								const form = e.currentTarget as HTMLFormElement;
 								if (!selectedFoodIdByMeal[meal.id]) {
 									e.preventDefault();
 									foodInputValueByMeal[meal.id] = '';
+									return;
+								}
+								const amountInput = form.elements.namedItem('amount') as HTMLInputElement | null;
+								if (amountInput) {
+									const raw = amountInput.value;
+									const normalized = normalizeDecimal(raw);
+									if (!normalized && raw.trim() !== '') {
+										e.preventDefault();
+										amountErrorByMeal[meal.id] = 'Enter a valid amount (numbers only).';
+										return;
+									}
+									amountErrorByMeal[meal.id] = '';
+									amountInput.value = normalized;
+								} else {
+									amountErrorByMeal[meal.id] = '';
 								}
 							}}
 							onkeydown={(e) => {
@@ -337,12 +361,27 @@
 									aria-label={`Amount${selectedUnits[meal.id] ? ` (${selectedUnits[meal.id]})` : ''}`}
 									name="amount"
 									label={`Amount${selectedUnits[meal.id] ? ` (${selectedUnits[meal.id]})` : ''}`}
-									type="number"
+									type="text"
 									required
 									no-asterisk
 									step="0.01"
 									inputmode="decimal"
 									min="0.01"
+									error={Boolean(amountErrorByMeal[meal.id])}
+									errorText={amountErrorByMeal[meal.id] ?? ''}
+									onchange={(e) => {
+										const input = e.target as HTMLInputElement | null;
+										if (!input) return;
+										const raw = input.value;
+										const normalized = normalizeDecimal(raw);
+										if (!normalized && raw.trim() !== '') {
+											amountErrorByMeal[meal.id] =
+												'Enter a valid amount (numbers only).';
+										} else {
+											amountErrorByMeal[meal.id] = '';
+										}
+										input.value = normalized;
+									}}
 								></md-filled-text-field>
 							</div>
 							<md-text-button type="submit">Add item</md-text-button>
