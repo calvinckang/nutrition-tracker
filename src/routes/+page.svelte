@@ -179,7 +179,10 @@
 		</header>
 
 		{#if meals.length === 0}
-			<p class="empty-text">Nothing logged yet today.</p>
+			<div class="empty-state">
+				<span class="empty-state-icon material-symbols-outlined" aria-hidden="true">nutrition</span>
+				<p class="empty-text">Nothing logged yet today.</p>
+			</div>
 		{:else}
 			<ul class="meals-list">
 				{#each meals as meal}
@@ -515,6 +518,19 @@
 	}
 	.link-button.small {
 		font-size: 0.8rem;
+	}
+	.empty-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 48px 0;
+		gap: 16px;
+	}
+	.empty-state-icon {
+		font-size: 64px;
+		color: var(--md-sys-color-on-surface-variant);
+		opacity: 0.5;
 	}
 	.empty-text,
 	.meal-empty {

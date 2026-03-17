@@ -42,7 +42,12 @@
 	</header>
 
 	{#if allDays.length === 0 && !hasMore}
-		<p class="empty-text">No meals yet.</p>
+		<div class="empty-state-wrap">
+			<div class="empty-state">
+				<span class="empty-state-icon material-symbols-outlined" aria-hidden="true">nutrition</span>
+				<p class="empty-text">No meals yet.</p>
+			</div>
+		</div>
 	{:else}
 		{#if allDays.length > 0}
 			<ul class="days-list">
@@ -163,6 +168,16 @@
 		display: flex;
 		flex-direction: column;
 		gap: 24px;
+		flex: 1;
+		min-height: 0;
+	}
+	.empty-state-wrap {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		min-height: 0;
 	}
 	.history-header {
 		flex-direction: column;
@@ -171,6 +186,18 @@
 	}
 	.history-title {
 		margin: 0;
+	}
+	.empty-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 16px;
+	}
+	.empty-state-icon {
+		font-size: 64px;
+		color: var(--md-sys-color-on-surface-variant);
+		opacity: 0.5;
 	}
 	.empty-text {
 		margin: 0;
