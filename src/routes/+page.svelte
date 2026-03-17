@@ -5,6 +5,8 @@
 	import '@material/web/button/outlined-button.js';
 	import '@material/web/button/text-button.js';
 	import '@material/web/iconbutton/icon-button.js';
+	import '@material/web/menu/menu.js';
+	import '@material/web/menu/menu-item.js';
 
 	let { data } = $props();
 	const today = $derived(data.today as string);
@@ -14,8 +16,8 @@
 	const selectedUnits = $state<Record<string, string>>({});
 	const selectedFoodIdByMeal = $state<Record<string, string>>({});
 	const foodInputValueByMeal = $state<Record<string, string>>({});
+	const foodMenuWidthByMeal = $state<Record<string, number>>({});
 	let openFoodDropdownMealId = $state<string | null>(null);
-	let dropdownBlurTimeout: ReturnType<typeof setTimeout> | null = null;
 
 	function foodLabel(food: { name: string; brand?: string | null }) {
 		return food.brand ? `${food.name} – ${food.brand}` : food.name;
@@ -35,26 +37,15 @@
 		selectedFoodIdByMeal[mealId] = food?.id ?? '';
 	}
 
-	function selectFood(mealId: string, food: { id: string; name: string; brand?: string | null; servingUnit?: string }) {
+	function selectFood(
+		mealId: string,
+		food: { id: string; name: string; brand?: string | null; servingUnit?: string }
+	) {
 		const label = foodLabel(food);
 		foodInputValueByMeal[mealId] = label;
 		selectedUnits[mealId] = food.servingUnit ?? '';
 		selectedFoodIdByMeal[mealId] = food.id;
 		openFoodDropdownMealId = null;
-	}
-
-	function scheduleCloseDropdown() {
-		dropdownBlurTimeout = setTimeout(() => {
-			openFoodDropdownMealId = null;
-			dropdownBlurTimeout = null;
-		}, 150);
-	}
-
-	function cancelCloseDropdown() {
-		if (dropdownBlurTimeout) {
-			clearTimeout(dropdownBlurTimeout);
-			dropdownBlurTimeout = null;
-		}
 	}
 
 	function clearFoodInput(mealId: string) {
@@ -254,7 +245,8 @@
 							<input type="hidden" name="foodEntryId" value={selectedFoodIdByMeal[meal.id] ?? ''} />
 							<div class="add-item-label">
 								<div class="food-input-wrap">
-								<md-filled-text-field
+									<md-filled-text-field
+										id={`food-input-${meal.id}`}
 										name="food"
 										label="Select food"
 										type="text"
@@ -267,12 +259,31 @@
 										required
 										no-asterisk
 										value={foodInputValueByMeal[meal.id] ?? ''}
-										oninput={(e) => handleFoodInput(meal.id, (e.currentTarget as HTMLInputElement).value)}
-										onfocus={() => {
-											cancelCloseDropdown();
-											openFoodDropdownMealId = meal.id;
+										oninput={(e) =>
+											handleFoodInput(meal.id, (e.currentTarget as HTMLInputElement).value)}
+										onclick={() => {
+											const el = document.getElementById(
+												`food-input-${meal.id}`
+											) as HTMLElement | null;
+											if (el) {
+												foodMenuWidthByMeal[meal.id] = el.getBoundingClientRect().width;
+											}
+											openFoodDropdownMealId =
+												openFoodDropdownMealId === meal.id ? null : meal.id;
 										}}
-										onblur={scheduleCloseDropdown}
+										onkeydown={(e) => {
+											if (e.key === 'Enter' || e.key === 'ArrowDown') {
+												e.preventDefault();
+												const el = document.getElementById(
+													`food-input-${meal.id}`
+												) as HTMLElement | null;
+												if (el) {
+													foodMenuWidthByMeal[meal.id] =
+														el.getBoundingClientRect().width;
+												}
+												openFoodDropdownMealId = meal.id;
+											}
+										}}
 									></md-filled-text-field>
 									{#if (foodInputValueByMeal[meal.id] ?? '').trim()}
 										<button
@@ -285,32 +296,40 @@
 											<span class="material-symbols-outlined">close</span>
 										</button>
 									{/if}
-									{#if openFoodDropdownMealId === meal.id}
-										<div
-											class="food-dropdown"
-											role="listbox"
-											onmouseenter={cancelCloseDropdown}
-											onmouseleave={scheduleCloseDropdown}
-										>
-											{#each filteredFoodsForMeal(meal.id) as food (food.id)}
-												<button
-													type="button"
-													class="food-dropdown-item"
-													role="option"
-													onmousedown={(e) => e.preventDefault()}
-													onclick={() => selectFood(meal.id, food)}
-												>
-													<span class="food-dropdown-item__primary">{food.name}</span>
-													{#if food.brand}
-														<span class="food-dropdown-item__secondary">{food.brand}</span>
-													{/if}
-												</button>
-											{/each}
-											{#if filteredFoodsForMeal(meal.id).length === 0}
-												<div class="food-dropdown-empty" role="option">No foods match</div>
-											{/if}
-										</div>
-									{/if}
+									<md-menu
+										anchor={`food-input-${meal.id}`}
+										menu-positioning="popover"
+										role="listbox"
+										style={`min-width: ${foodMenuWidthByMeal[meal.id] ?? 0}px; max-width: ${foodMenuWidthByMeal[meal.id] ?? 0}px;`}
+										open={openFoodDropdownMealId === meal.id}
+										onclosed={() => {
+											openFoodDropdownMealId = null;
+										}}
+									>
+										{#each filteredFoodsForMeal(meal.id) as food (food.id)}
+											<md-menu-item
+												type="button"
+												role="option"
+												onclick={() => selectFood(meal.id, food)}
+											>
+												<div class="food-dropdown-item__primary" slot="headline">
+													{food.name}
+												</div>
+												{#if food.brand}
+													<div class="food-dropdown-item__secondary" slot="supporting-text">
+														{food.brand}
+													</div>
+												{/if}
+											</md-menu-item>
+										{/each}
+										{#if filteredFoodsForMeal(meal.id).length === 0}
+											<md-menu-item disabled>
+												<div class="food-dropdown-empty" slot="headline">
+													No foods match
+												</div>
+											</md-menu-item>
+										{/if}
+									</md-menu>
 								</div>
 							</div>
 							<div class="add-item-label">
@@ -546,49 +565,6 @@
 		position: relative;
 		width: 100%;
 	}
-	/* M3 menu/dropdown: surface container, elevation 2, 4px corners, 8px vertical padding */
-	.food-dropdown {
-		position: absolute;
-		top: calc(100% + 4px);
-		left: 0;
-		right: 0;
-		z-index: 20;
-		max-height: 288px;
-		overflow-y: auto;
-		border-radius: 4px;
-		background: var(--md-sys-color-surface-container, #fffbfe);
-		box-shadow:
-			0 3px 3px -2px rgba(0, 0, 0, 0.2),
-			0 2px 2px 0 rgba(0, 0, 0, 0.14),
-			0 1px 5px 0 rgba(0, 0, 0, 0.12);
-		padding: 8px 0;
-	}
-	/* M3 list item: 16px horizontal padding, min 48px height, typography body-large / label-large */
-	.food-dropdown-item {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 2px;
-		width: 100%;
-		min-height: 48px;
-		padding: 12px 16px;
-		border: none;
-		background: transparent;
-		text-align: left;
-		font: inherit;
-		font-size: var(--md-sys-typescale-body-large-size, 1rem);
-		line-height: var(--md-sys-typescale-body-large-line-height, 1.5rem);
-		color: var(--md-sys-color-on-surface, #1d1b1f);
-		cursor: pointer;
-		transition: background-color 0.15s ease;
-	}
-	.food-dropdown-item:hover,
-	.food-dropdown-item:focus-visible {
-		background: color-mix(in srgb, var(--md-sys-color-primary, #6750a4) 8%, transparent);
-	}
-	.food-dropdown-item:focus {
-		outline: none;
-	}
 	.food-dropdown-item__primary {
 		font-weight: var(--md-sys-typescale-body-large-weight, 400);
 	}
@@ -598,7 +574,6 @@
 		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.food-dropdown-empty {
-		padding: 12px 16px;
 		font-size: var(--md-sys-typescale-body-medium-size, 0.875rem);
 		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
