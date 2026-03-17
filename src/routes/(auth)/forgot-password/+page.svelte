@@ -95,7 +95,7 @@
 
 	.auth-body {
 		margin: 0 0 24px;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 
 	.auth-form {
@@ -111,7 +111,7 @@
 
 	.auth-error {
 		margin: 0;
-		color: var(--md-sys-color-error, #b3261e);
+		color: var(--md-sys-color-error);
 		font-size: 0.875rem;
 	}
 
@@ -121,7 +121,7 @@
 	}
 
 	.auth-links a {
-		color: var(--md-sys-color-primary, #6750a4);
+		color: var(--md-sys-color-primary);
 		text-decoration: none;
 	}
 

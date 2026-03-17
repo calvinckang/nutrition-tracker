@@ -114,7 +114,7 @@
 	}
 	.auth-error {
 		margin: 0;
-		color: var(--md-sys-color-error, #b3261e);
+		color: var(--md-sys-color-error);
 		font-size: 0.875rem;
 	}
 	.auth-links {
@@ -125,7 +125,7 @@
 		gap: 4px;
 	}
 	.auth-links a {
-		color: var(--md-sys-color-primary, #6750a4);
+		color: var(--md-sys-color-primary);
 		text-decoration: none;
 	}
 	.auth-links a:hover {

@@ -7,8 +7,20 @@
 	import '@material/web/iconbutton/icon-button.js';
 	import '@material/web/menu/menu.js';
 	import '@material/web/menu/menu-item.js';
+	import '@material/web/dialog/dialog.js';
 
 	let { data } = $props();
+	let deleteMealTarget = $state<{ id: string; name: string | null } | null>(null);
+	let deleteMealDialogOpen = $state(false);
+
+	function openDeleteMeal(meal: { id: string; name: string | null }) {
+		deleteMealTarget = meal;
+		deleteMealDialogOpen = true;
+	}
+	function closeDeleteMeal() {
+		deleteMealTarget = null;
+		deleteMealDialogOpen = false;
+	}
 	const today = $derived(data.today as string);
 	const meals = $derived(data.meals ?? []);
 	const dailyTotals = $derived(data.dailyTotals ?? {});
@@ -174,21 +186,15 @@
 					<li class="meal-card">
 						<header class="meal-header">
 							<div>
-								<p class="meal-name meal-name--today">{meal.name || 'Meal'}</p>
+								<h4 class="meal-name meal-name--today">{meal.name || 'Meal'}</h4>
 							</div>
-							<form method="POST" action="?/deleteMeal">
-								<input type="hidden" name="mealId" value={meal.id} />
-								<md-text-button
-									onclick={(e) => {
-										const form = (e.currentTarget as HTMLElement).closest('form') as HTMLFormElement | null;
-										if (!form) return;
-										if (!confirm('Delete this meal? You can’t undo this.')) return;
-										form.requestSubmit();
-									}}
+								<md-icon-button
+									type="button"
+									aria-label="Delete meal"
+									onclick={() => openDeleteMeal({ id: meal.id, name: meal.name })}
 								>
-									Delete
-								</md-text-button>
-							</form>
+									<span class="material-symbols-outlined">delete</span>
+								</md-icon-button>
 						</header>
 
 						{#if meal.items.length === 0}
@@ -393,24 +399,51 @@
 	</section>
 </div>
 
+<md-dialog
+	open={deleteMealDialogOpen}
+	onclosed={() => {
+		deleteMealDialogOpen = false;
+		deleteMealTarget = null;
+	}}
+>
+	<div slot="headline">Delete this meal?</div>
+	<form slot="content" method="dialog">
+		<p>You can't undo this.</p>
+	</form>
+	<div slot="actions">
+		<md-text-button type="button" onclick={closeDeleteMeal}>Cancel</md-text-button>
+		{#if deleteMealTarget}
+			<form method="POST" action="?/deleteMeal">
+				<input type="hidden" name="mealId" value={deleteMealTarget.id} />
+				<md-filled-button type="submit">Delete</md-filled-button>
+			</form>
+		{/if}
+	</div>
+</md-dialog>
+
 <style>
 	.today-page {
 		display: flex;
 		flex-direction: column;
 		gap: 24px;
 	}
+	.today-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
 	.today-title {
 		margin: 0;
 	}
 	.today-date {
 		margin: 0;
-		font-size: var(--md-sys-typescale-body-large-size);
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		font-size: var(--md-sys-typescale-headline-small-size);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.today-totals {
 		padding: 20px 20px;
 		border-radius: 24px;
-		background: color-mix(in srgb, var(--md-sys-color-surface-container, #fffbfe), transparent 0%);
+		background: color-mix(in srgb, var(--md-sys-color-surface-container), transparent 0%);
 	}
 	.totals-row {
 		display: flex;
@@ -419,7 +452,6 @@
 	}
 	.totals-label {
 		font-size: 0.8rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.totals-value {
 		display: inline-flex;
@@ -432,7 +464,6 @@
 	}
 	.totals-value-unit {
 		font-size: 0.8rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.totals-grid {
 		display: grid;
@@ -475,12 +506,12 @@
 		border: none;
 		padding: 0;
 		background: none;
-		color: var(--md-sys-color-primary, #6750a4);
+		color: var(--md-sys-color-primary);
 		font-size: 0.9rem;
 		cursor: pointer;
 	}
 	.link-button.danger {
-		color: var(--md-sys-color-error, #b3261e);
+		color: var(--md-sys-color-error);
 	}
 	.link-button.small {
 		font-size: 0.8rem;
@@ -489,7 +520,7 @@
 	.meal-empty {
 		margin: 0;
 		font-size: 0.9rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.meals-list {
 		list-style: none;
@@ -502,7 +533,7 @@
 	.meal-card {
 		border-radius: 24px;
 		padding: 20px;
-		background: var(--md-sys-color-surface-container, #fffbfe);
+		background: var(--md-sys-color-surface-container);
 	}
 	.meal-header {
 		display: flex;
@@ -512,11 +543,6 @@
 	}
 	.meal-name {
 		margin: 0;
-	}
-	.meal-name--today {
-		font-size: var(--md-sys-typescale-headline-small-size);
-		font-weight: var(--md-sys-typescale-headline-small-weight);
-		line-height: var(--md-sys-typescale-headline-small-line-height);
 	}
 	.items-list {
 		list-style: none;
@@ -532,7 +558,7 @@
 		align-items: center;
 		gap: 12px;
 		padding: 16px;
-		background: var(--md-sys-color-surface, #f3edf7);
+		background: var(--md-sys-color-surface);
 		border-radius: 16px;
 	}
 	.item-main {
@@ -549,12 +575,12 @@
 	.item-brand {
 		margin: 0;
 		font-size: 0.875rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.item-meta {
 		margin: 0;
 		font-size: var(--md-sys-typescale-body-large-size, 1rem);
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.add-item-form {
 		display: flex;
@@ -567,7 +593,7 @@
 		flex-direction: column;
 		gap: 4px;
 		font-size: 0.8rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.amount-unit {
 		margin-left: 4px;
@@ -589,13 +615,13 @@
 		border: none;
 		background: transparent;
 		border-radius: 50%;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 		cursor: pointer;
 		transition: background-color 0.15s ease, color 0.15s ease;
 	}
 	.food-name-input-clear:hover {
-		background: color-mix(in srgb, var(--md-sys-color-on-surface-variant, #49454f) 12%);
-		color: var(--md-sys-color-on-surface, #1d1b1f);
+		background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%);
+		color: var(--md-sys-color-on-surface);
 	}
 	.food-name-input-clear .material-symbols-outlined {
 		font-size: 1.25rem;
@@ -610,11 +636,11 @@
 	.food-dropdown-item__secondary {
 		font-size: var(--md-sys-typescale-body-medium-size, 0.875rem);
 		line-height: var(--md-sys-typescale-body-medium-line-height, 1.25rem);
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.food-dropdown-empty {
 		font-size: var(--md-sys-typescale-body-medium-size, 0.875rem);
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	md-filled-button {
 		width: 100%;

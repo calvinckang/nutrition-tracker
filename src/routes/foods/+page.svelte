@@ -5,6 +5,7 @@
 	import '@material/web/button/filled-button.js';
 	import '@material/web/button/outlined-button.js';
 	import '@material/web/button/text-button.js';
+	import '@material/web/iconbutton/icon-button.js';
 	import '@material/web/dialog/dialog.js';
 
 	let { data } = $props();
@@ -65,10 +66,17 @@
 					</div>
 					{#if isAdmin}
 						<div class="food-item__actions">
-							<a href="/foods/{food.id}/edit" data-sveltekit-preload-data="hover">
-								<md-text-button>Edit</md-text-button>
+							<a href="/foods/{food.id}/edit" data-sveltekit-preload-data="hover" aria-label="Edit">
+								<md-icon-button>
+									<span class="material-symbols-outlined">edit</span>
+								</md-icon-button>
 							</a>
-							<md-text-button onclick={() => openDelete({ id: food.id, name: food.name })}>Delete</md-text-button>
+							<md-icon-button
+								aria-label="Delete"
+								onclick={() => openDelete({ id: food.id, name: food.name })}
+							>
+								<span class="material-symbols-outlined">delete</span>
+							</md-icon-button>
 						</div>
 					{/if}
 				</li>
@@ -126,7 +134,7 @@
 	}
 	.empty-state__text {
 		margin: 0;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.food-list {
 		list-style: none;
@@ -143,7 +151,7 @@
 		gap: 14px;
 		padding: 20px;
 		border-radius: 24px;
-		background: var(--md-sys-color-surface-container, #fffbfe);
+		background: var(--md-sys-color-surface-container);
 	}
 	.food-item__main {
 		display: flex;
@@ -157,11 +165,11 @@
 	}
 	.food-item__brand {
 		font-size: 0.875rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.food-item__meta {
 		font-size: var(--md-sys-typescale-body-large-size, 1rem);
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.food-item__actions {
 		display: flex;
@@ -181,7 +189,7 @@
 	.fab-link md-filled-button {
 		width: 100%;
 		border-radius: 999px;
-		box-shadow: 0 4px 8px color-mix(in srgb, var(--md-sys-color-outline-variant, #cac4d0) 40%, transparent);
+		box-shadow: 0 4px 8px color-mix(in srgb, var(--md-sys-color-outline-variant) 40%, transparent);
 	}
 	:global(md-dialog) {
 		max-width: 440px;
@@ -194,8 +202,8 @@
 		transform: translateX(-50%);
 		margin: 0;
 		padding: 12px 20px;
-		background: var(--md-sys-color-inverse-surface, #313033);
-		color: var(--md-sys-color-inverse-on-surface, #e6e1e5);
+		background: var(--md-sys-color-inverse-surface);
+		color: var(--md-sys-color-inverse-on-surface);
 		border-radius: 28px;
 		font-size: 0.875rem;
 		z-index: 10;

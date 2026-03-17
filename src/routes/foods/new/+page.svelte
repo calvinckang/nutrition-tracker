@@ -451,25 +451,21 @@ function normalizeDecimal(value: string): string {
 		margin-bottom: 24px;
 		padding: 20px;
 		border-radius: 24px;
-		background: var(--md-sys-color-surface-container, #fffbfe);
+		background: var(--md-sys-color-surface-container);
 	}
 	.form-subheading {
 		margin: 0 0 12px;
-		font-size: var(--md-sys-typescale-title-medium-size);
-		font-weight: var(--md-sys-typescale-title-medium-weight);
-		line-height: var(--md-sys-typescale-title-medium-line-height);
-		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.form-label {
 		display: block;
 		margin-bottom: 4px;
 		font-size: 0.75rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.form-select {
 		width: 100%;
 		padding: 12px 16px;
-		border: 1px solid var(--md-sys-color-outline, #79747e);
+		border: 1px solid var(--md-sys-color-outline);
 		border-radius: 4px;
 		font-size: 1rem;
 		margin-bottom: 16px;
@@ -478,7 +474,7 @@ function normalizeDecimal(value: string): string {
 	.form-nutrient-sub {
 		margin: 0;
 		font-size: 0.75rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.form-row-tight {
 		display: flex;
@@ -488,7 +484,7 @@ function normalizeDecimal(value: string): string {
 	.form-input {
 		width: 100%;
 		padding: 12px 16px;
-		border: 1px solid var(--md-sys-color-outline, #79747e);
+		border: 1px solid var(--md-sys-color-outline);
 		border-radius: 4px;
 		font-size: 1rem;
 		box-sizing: border-box;

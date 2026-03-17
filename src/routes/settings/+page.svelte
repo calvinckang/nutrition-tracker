@@ -83,6 +83,6 @@ import '@material/web/select/select-option.js';
 	.settings-body {
 		margin: 0;
 		font-size: 0.95rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 </style>

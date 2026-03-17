@@ -177,7 +177,7 @@
 	}
 	.auth-body {
 		margin: 0 0 16px;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.auth-subtext {
 		margin: 0 0 24px;
@@ -198,7 +198,7 @@
 		font-size: 0.875rem;
 	}
 	.auth-links a {
-		color: var(--md-sys-color-primary, #6750a4);
+		color: var(--md-sys-color-primary);
 		text-decoration: none;
 	}
 	.auth-links a:hover {

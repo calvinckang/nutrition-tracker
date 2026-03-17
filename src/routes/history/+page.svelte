@@ -1,16 +1,35 @@
 <script lang="ts">
 	import { formatNumber } from '$lib/utils/format';
+	import '@material/web/button/filled-button.js';
 
 	let { data } = $props();
-	const days = $derived(data.days ?? []);
-	const today = $derived(data.today as string);
-	const startDate = $derived(data.startDate as string);
+
+	let allDays = $state([...(data.days ?? [])]);
+	let hasMore = $state(data.hasMore ?? false);
+	let nextCursor = $state(data.nextCursor ?? null);
+	let loadingMore = $state(false);
+
 	const formatDate = (iso: string) =>
 		new Date(iso + 'T00:00:00').toLocaleDateString('en-GB', {
 			day: 'numeric',
 			month: 'short',
 			year: 'numeric'
 		});
+
+	async function loadMore() {
+		if (!nextCursor || loadingMore) return;
+		loadingMore = true;
+		try {
+			const res = await fetch(`/history/load-more?before=${encodeURIComponent(nextCursor)}`);
+			if (!res.ok) return;
+			const json = await res.json();
+			allDays = [...allDays, ...(json.days ?? [])];
+			hasMore = json.hasMore ?? false;
+			nextCursor = json.nextCursor ?? null;
+		} finally {
+			loadingMore = false;
+		}
+	}
 </script>
 
 <svelte:head>
@@ -19,26 +38,21 @@
 
 <div class="history-page">
 	<header class="page-header history-header">
-		<h2 class="history-title">This week</h2>
-		<p class="history-range">
-			{formatDate(startDate)} – {formatDate(today)}
-		</p>
+		<h2 class="history-title">History</h2>
 	</header>
 
-	{#if days.length === 0}
-		<p class="empty-text">No meals this week.</p>
+	{#if allDays.length === 0 && !hasMore}
+		<p class="empty-text">No meals yet.</p>
 	{:else}
-		<ul class="days-list">
-			{#each days as day}
-				<li class="day-card">
+		{#if allDays.length > 0}
+			<ul class="days-list">
+				{#each allDays as day}
+					<li class="day-card">
 					<header class="day-header">
 						<h3 class="day-title">
 							{formatDate(day.date)}
 						</h3>
-						<p class="day-calories">
-							<span class="day-calories-number">{formatNumber(day.totals.caloriesKcal)}</span>
-							<span class="day-calories-unit">kcal</span>
-						</p>
+						<p class="day-calories">{formatNumber(day.totals.caloriesKcal)} kcal</p>
 					</header>
 					{#if day.meals.length === 0}
 						<p class="day-empty">No meals.</p>
@@ -47,7 +61,7 @@
 							{#each day.meals as meal}
 								<li class="meal-row">
 									<div class="meal-main">
-										<p class="meal-name">{meal.name || 'Meal'}</p>
+										<h4 class="meal-name">{meal.name || 'Meal'}</h4>
 										<div class="meal-totals-grid">
 											<div class="totals-item">
 												<span class="totals-label">Calories</span>
@@ -128,8 +142,19 @@
 						</ul>
 					{/if}
 				</li>
-			{/each}
-		</ul>
+				{/each}
+			</ul>
+		{/if}
+		{#if hasMore}
+			<div class="load-more-wrap">
+				<md-filled-button
+					disabled={loadingMore}
+					onclick={loadMore}
+				>
+					{loadingMore ? 'Loading…' : 'Load more'}
+				</md-filled-button>
+			</div>
+		{/if}
 	{/if}
 </div>
 
@@ -139,18 +164,18 @@
 		flex-direction: column;
 		gap: 24px;
 	}
+	.history-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
 	.history-title {
 		margin: 0;
-	}
-	.history-range {
-		margin: 0;
-		font-size: var(--md-sys-typescale-body-large-size);
-		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.empty-text {
 		margin: 0;
 		font-size: 0.9rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.days-list {
 		list-style: none;
@@ -167,8 +192,9 @@
 	}
 	.day-header {
 		display: flex;
-		justify-content: space-between;
+		flex-direction: row;
 		align-items: baseline;
+		justify-content: space-between;
 		margin-bottom: 16px;
 	}
 	.day-title {
@@ -176,22 +202,13 @@
 	}
 	.day-calories {
 		margin: 0;
-		display: inline-flex;
-		align-items: baseline;
-		gap: 4px;
-	}
-	.day-calories-number {
-		font-size: var(--md-sys-typescale-title-medium-size, 1.125rem);
-		font-weight: 600;
-	}
-	.day-calories-unit {
-		font-size: 0.8rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		font-size: var(--md-sys-typescale-headline-small-size);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.day-empty {
 		margin: 0;
 		font-size: 0.9rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
+		color: var(--md-sys-color-on-surface-variant);
 	}
 	.meals-list {
 		list-style: none;
@@ -214,7 +231,7 @@
 		min-width: 0;
 		width: 100%;
 		padding: 20px;
-		background: var(--md-sys-color-surface-container, #fffbfe);
+		background: var(--md-sys-color-surface-container);
 		border-radius: 24px;
 	}
 	.totals-item {
@@ -224,9 +241,6 @@
 	}
 	.meal-name {
 		margin: 0;
-		font-size: var(--md-sys-typescale-headline-small-size);
-		font-weight: var(--md-sys-typescale-headline-small-weight);
-		line-height: var(--md-sys-typescale-headline-small-line-height);
 	}
 	.meal-totals-grid {
 		display: grid;
@@ -235,7 +249,6 @@
 		row-gap: 8px;
 		width: 100%;
 		font-size: 0.8rem;
-		color: var(--md-sys-color-on-surface-variant, #49454f);
 	}
 	.meal-totals-value {
 		display: inline-flex;
@@ -250,5 +263,11 @@
 		margin: 0;
 		font-size: 0.9rem;
 		font-weight: 500;
+	}
+	.load-more-wrap {
+		width: 100%;
+	}
+	.load-more-wrap :global(md-filled-button) {
+		width: 100%;
 	}
 </style>

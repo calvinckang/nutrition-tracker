@@ -18,6 +18,12 @@
 	--md-ref-typeface-plain: var(--font-sans);
 
 	/* Material Design 3 – Expressive type scale (subset used in app). */
+	/* Display */
+	--md-sys-typescale-display-medium-size: 2.8125rem; /* 45px */
+	--md-sys-typescale-display-medium-line-height: 3.25rem; /* 52px */
+	--md-sys-typescale-display-medium-weight: 400;
+	--md-sys-typescale-display-medium-letter-spacing: 0em;
+
 	--md-sys-typescale-display-small-size: 2.25rem; /* 36px */
 	--md-sys-typescale-display-small-line-height: 2.75rem; /* 44px */
 	--md-sys-typescale-display-small-weight: 400;
@@ -179,40 +185,52 @@ h5,
 h6 {
 	margin: 0;
 	font-family: var(--font-sans);
-	font-weight: 600;
-	line-height: var(--md-sys-typescale-headline-small-line-height);
 }
 
 h1 {
 	font-family: var(--font-display);
 	font-size: var(--md-sys-typescale-display-small-size);
 	line-height: var(--md-sys-typescale-display-small-line-height);
+	font-weight: var(--md-sys-typescale-display-small-weight);
 	text-transform: uppercase;
-	font-weight: 300;
-	color: var(--md-sys-color-primary);
-	letter-spacing: 0.025em;
 	text-align: center;
-}
-
-h2 {
-	font-size: var(--md-sys-typescale-display-small-size);
-	line-height: var(--md-sys-typescale-display-small-line-height);
-	font-weight: 700;
+	color: var(--md-sys-color-primary);
 	letter-spacing: var(--md-sys-typescale-display-small-letter-spacing);
 }
 
+h2 {
+	font-size: var(--md-sys-typescale-display-medium-size);
+	line-height: var(--md-sys-typescale-display-medium-line-height);
+	font-weight: 700;
+	color: var(--md-sys-color-primary);
+}
+
 h3 {
+	font-size: var(--md-sys-typescale-headline-medium-size);
+	font-weight: 600;
+	line-height: var(--md-sys-typescale-headline-medium-line-height);
+}
+
+/* Card/section title typography */
+.meal-name {
 	font-size: var(--md-sys-typescale-headline-small-size);
 	font-weight: var(--md-sys-typescale-headline-small-weight);
 	line-height: var(--md-sys-typescale-headline-small-line-height);
 }
 
-/* Card/section title typography (meal name, food item name) */
-.meal-name,
 .food-item__name {
 	font-size: var(--md-sys-typescale-title-medium-size);
 	font-weight: var(--md-sys-typescale-title-medium-weight);
 	line-height: var(--md-sys-typescale-title-medium-line-height);
+}
+
+/* Totals typography: numbers on-surface, labels/units on-surface-variant */
+.totals-value-number {
+	color: var(--md-sys-color-on-surface);
+}
+.totals-label,
+.totals-value-unit {
+	color: var(--md-sys-color-on-surface-variant);
 }
 
 p {
@@ -275,7 +293,7 @@ body > div {
 	flex-shrink: 0;
 	padding: 16px 16px 12px;
 	border-bottom: 1px solid color-mix(in var(--md-sys-color-outline-variant, currentColor), transparent 80%);
-	background: color-mix(in var(--md-sys-color-surface, #fff), transparent 0%);
+	background: color-mix(in var(--md-sys-color-surface), transparent 0%);
 }
 
 .top-app-bar__title {
@@ -312,13 +330,13 @@ body > div {
 	right: 0;
 	bottom: 0;
 	width: 100%;
-	background: var(--md-sys-color-surface-container, #f3edf7);
+	background: var(--md-sys-color-surface-container);
 	border-top: 1px solid color-mix(in var(--md-sys-color-outline-variant, currentColor), transparent 80%);
 	z-index: 100;
 }
 
 [data-theme='dark'] .bottom-nav {
-	background: var(--md-sys-color-surface-container, #1d1b20);
+	background: var(--md-sys-color-surface-container);
 }
 
 .bottom-nav__bar {
@@ -346,8 +364,9 @@ body > div {
 .bottom-nav__label {
 	display: block;
 	text-align: center;
-	font-size: 0.8rem;
-	line-height: 1.2rem;
+	font-size: var(--md-sys-typescale-label-medium-size);
+	line-height: var(--md-sys-typescale-label-medium-line-height);
+	font-weight: var(--md-sys-typescale-label-medium-weight);
 }
 
 .bottom-nav__link {
@@ -365,8 +384,8 @@ body > div {
 .bottom-nav__link--active {
 	background-color: color-mix(
 		in srgb,
-		var(--md-sys-color-primary, #6750a4) 12%,
-		var(--md-sys-color-surface-container, #f3edf7)
+		var(--md-sys-color-primary) 12%,
+		var(--md-sys-color-surface-container)
 	);
 }
 
