@@ -336,6 +336,7 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
 - **Fidelity to M3**:
   - Default to Material Web’s out-of-the-box M3 tokens for color, type, and shape.
   - It is acceptable if this is not a perfect match to “M3 Expressive” as long as components follow the general M3 look and feel.
+  - **Color palette**: Uses `@material/material-color-utilities` with a single seed color (`#626200` in `src/lib/theme.ts`) to generate the full palette for both light and dark modes. Change `SEED_COLOR` to shift hue across the entire app. Surface container tokens are derived (95% surface + 5% on-surface-variant) for subtle card elevation.
   - Further customization (theme builder, advanced tokens, motion) can be added later as polish.
 - **Validations and feedback (M3)**:
   - Use **Material Design 3** (Material Web) for all validation and feedback:
@@ -356,6 +357,7 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
 - **Application**:
   - Apply the effective theme by setting an attribute such as `data-theme="light"` or `data-theme="dark"` on the root element (`<html>` or `<body>`).
   - Use this attribute to control `color-scheme` and any theme-specific CSS (e.g. different Material token sets per theme).
+  - Color tokens are applied at runtime via `@material/material-color-utilities` (see §7); fallbacks in `app.css` handle first paint before JS loads.
 - **Where to change theme**:
   - Provide the theme selection UI **only** in the **Settings** screen (see §9). Do **not** show a global theme toggle on every page.
   - Options: “System default” | “Light” | “Dark” (e.g. as a submenu or select).

@@ -1,0 +1,13 @@
+diff --git a/dynamiccolor/color_spec_2025.js b/dynamiccolor/color_spec_2025.js
+index 8bef961c7c6127c028b98ee3305270be5247a0c2..271597946422c58b91a54c1e1a748d30350ac015 100644
+--- a/dynamiccolor/color_spec_2025.js	
++++ b/dynamiccolor/color_spec_2025.js	
+@@ -18,7 +18,7 @@ import { Hct } from '../hct/hct.js';
+ import * as math from '../utils/math_utils.js';
+ import { ColorSpecDelegateImpl2021 } from './color_spec_2021.js';
+ import { ContrastCurve } from './contrast_curve.js';
+-import { DynamicColor, extendSpecVersion } from './dynamic_color';
++import { DynamicColor, extendSpecVersion } from './dynamic_color.js';
+ import { ToneDeltaPair } from './tone_delta_pair.js';
+ import { Variant } from './variant.js';
+ /**

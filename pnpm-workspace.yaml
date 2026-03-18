@@ -1,2 +1,5 @@
 onlyBuiltDependencies:
   - esbuild
+
+patchedDependencies:
+  '@material/material-color-utilities@0.4.0': patches/@material__material-color-utilities@0.4.0.patch

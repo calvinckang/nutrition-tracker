@@ -61,17 +61,23 @@
 	--md-outlined-button-container-height: 48px;
 	--md-filled-button-container-height: 48px;
 
-	/* Light theme color tokens (M3-ish defaults) */
-	--md-sys-color-surface: #f3edf7;
-	--md-sys-color-surface-container: #fffbfe;
+	/* Color tokens from @material/material-color-utilities (seed #626200) – set at runtime in theme.ts */
+	/* Fallbacks for first paint before JS; applyTheme overrides these */
+	--md-sys-color-surface: #f5f5e8;
 	--md-sys-color-on-surface: #1d1b1f;
 	--md-sys-color-on-surface-variant: #49454f;
-	--md-sys-color-primary: #6750a4;
+	--md-sys-color-primary: #6b6b00;
 	--md-sys-color-on-primary: #ffffff;
 	--md-sys-color-outline: #79747e;
 	--md-sys-color-outline-variant: #cac4d0;
 	--md-sys-color-inverse-surface: #313033;
 	--md-sys-color-inverse-on-surface: #f4eff4;
+	--md-sys-color-error: #ba1a1a;
+	--md-sys-color-on-error: #ffffff;
+	/* Surface containers not in Scheme; derive from surface for cards and inputs */
+	/* Light: surface-container is slightly darker than surface for card elevation */
+	--md-sys-color-surface-container: color-mix(in srgb, var(--md-sys-color-surface) 95%, var(--md-sys-color-on-surface-variant));
+	--md-sys-color-surface-container-highest: color-mix(in srgb, var(--md-sys-color-surface) 55%, white);
 }
 
 /* Consistent horizontal padding for all Material Web buttons globally */
@@ -86,11 +92,15 @@ md-outlined-button {
 [data-theme='light'] md-filled-text-field,
 [data-theme='light'] md-filled-select {
 	--md-filled-text-field-input-text-color: var(--md-sys-color-on-surface);
+	--md-filled-text-field-container-color: var(--md-sys-color-surface-container-highest);
+	--md-filled-select-text-field-container-color: var(--md-sys-color-surface-container-highest);
 }
 
 [data-theme='dark'] md-filled-text-field,
 [data-theme='dark'] md-filled-select {
 	--md-filled-text-field-input-text-color: var(--md-sys-color-on-surface);
+	--md-filled-text-field-container-color: var(--md-sys-color-surface-container);
+	--md-filled-select-text-field-container-color: var(--md-sys-color-surface-container);
 }
 
 /* Page header: title + subtitle/date in a row, space-between, 1rem gap */
@@ -118,17 +128,22 @@ md-outlined-button {
 [data-theme='dark'] {
 	color-scheme: dark;
 
-	/* Dark theme color tokens */
-	--md-sys-color-surface: #141218;
-	--md-sys-color-surface-container: #1d1b20;
+	/* Dark fallbacks for first paint; applyTheme overrides these */
+	--md-sys-color-surface: #1a1a14;
 	--md-sys-color-on-surface: #e6e1e5;
 	--md-sys-color-on-surface-variant: #cac4d0;
-	--md-sys-color-primary: #d0bcff;
-	--md-sys-color-on-primary: #381e72;
+	--md-sys-color-primary: #d4d400;
+	--md-sys-color-on-primary: #323200;
 	--md-sys-color-outline: #938f99;
 	--md-sys-color-outline-variant: #49454f;
 	--md-sys-color-inverse-surface: #e6e1e5;
 	--md-sys-color-inverse-on-surface: #313033;
+	--md-sys-color-error: #ffb4ab;
+	--md-sys-color-on-error: #690005;
+	/* Surface containers derived from surface (Scheme does not provide them) */
+	/* Dark: surface-container is slightly lighter than surface for subtle card elevation */
+	--md-sys-color-surface-container: color-mix(in srgb, var(--md-sys-color-surface) 95%, var(--md-sys-color-on-surface-variant));
+	--md-sys-color-surface-container-highest: color-mix(in srgb, var(--md-sys-color-surface) 92%, var(--md-sys-color-on-surface-variant));
 
 	--md-filled-text-field-container-color: var(--md-sys-color-surface-container);
 	--md-filled-select-text-field-container-color: var(--md-sys-color-surface-container);

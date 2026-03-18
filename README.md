@@ -115,6 +115,7 @@ After adding variables, redeploy the site for changes to take effect.
 - Better Auth  
 - Resend (emails)  
 - Material Web components  
+- Dynamic color theme (`@material/material-color-utilities`, seed-based, light/dark)  
 - PWA support  
 
 ---
