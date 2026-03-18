@@ -56,6 +56,14 @@ export async function setThemeMode(mode: ThemeMode): Promise<void> {
 	applyEffectiveTheme(getEffectiveTheme(mode));
 }
 
+function applyThemeToDialogs(theme: EffectiveTheme): void {
+	if (!colorThemeCache || typeof document === 'undefined') return;
+	const opts = { dark: theme === 'dark' };
+	document.querySelectorAll('md-dialog').forEach((el) => {
+		colorThemeCache!.applyTheme(colorThemeCache!.theme, { ...opts, target: el as HTMLElement });
+	});
+}
+
 export function applyEffectiveTheme(theme: EffectiveTheme): void {
 	if (typeof document === 'undefined') return;
 	document.documentElement.setAttribute('data-theme', theme);
@@ -65,6 +73,8 @@ export function applyEffectiveTheme(theme: EffectiveTheme): void {
 			target: document.documentElement,
 			dark: theme === 'dark'
 		});
+		// Dialogs render in top layer and may not inherit theme from documentElement
+		applyThemeToDialogs(theme);
 	}
 }
 
@@ -73,6 +83,17 @@ export async function initTheme(): Promise<void> {
 	await loadColorTheme();
 	const mode = getStoredThemeMode();
 	applyEffectiveTheme(getEffectiveTheme(mode));
+
+	// Apply theme to dialogs that are added later (e.g. on navigation)
+	const observer = new MutationObserver((records) => {
+		const hasNewDialog = records.some((r) =>
+			[...r.addedNodes].some(
+				(n) => n instanceof Element && (n.tagName === 'MD-DIALOG' || n.querySelector?.('md-dialog'))
+			)
+		);
+		if (hasNewDialog) applyThemeToDialogs(getEffectiveTheme(getStoredThemeMode()));
+	});
+	observer.observe(document.body, { childList: true, subtree: true });
 
 	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
 		const m = getStoredThemeMode();

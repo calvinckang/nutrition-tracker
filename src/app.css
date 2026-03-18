@@ -149,7 +149,8 @@ md-outlined-button {
 	--md-filled-select-text-field-container-color: var(--md-sys-color-surface-container);
 }
 
-[data-theme='dark'] md-dialog {
+/* Dialog container color (theme vars for buttons applied via theme.ts to md-dialog) */
+md-dialog {
 	--md-dialog-container-color: var(--md-sys-color-surface-container);
 }
 
