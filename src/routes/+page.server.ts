@@ -158,7 +158,7 @@ export const actions = {
 			name
 		});
 
-		throw redirect(302, '/');
+		throw redirect(302, '/?scrollToMeal=1');
 	},
 
 	addItem: async ({ request, locals }) => {

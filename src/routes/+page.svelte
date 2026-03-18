@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { tick } from 'svelte';
+	import { page } from '$app/stores';
 	import { formatNumber } from '$lib/utils/format';
 	import '@material/web/textfield/filled-text-field.js';
 	import '@material/web/button/filled-button.js';
@@ -80,6 +82,22 @@
 			month: 'short',
 			year: 'numeric'
 		});
+
+	// Scroll to new meal when returning from createMeal redirect
+	$effect(() => {
+		const scrollParam = $page.url.searchParams.get('scrollToMeal');
+		if (scrollParam && meals.length > 0) {
+			const scrollToMeal = () => {
+				const card = document.querySelector('.meal-card');
+				if (card) {
+					card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					history.replaceState(null, '', '/');
+				}
+			};
+			tick()
+				.then(() => requestAnimationFrame(() => requestAnimationFrame(scrollToMeal)));
+		}
+	});
 </script>
 
 <svelte:head>
@@ -547,6 +565,7 @@
 		gap: 20px;
 	}
 	.meal-card {
+		scroll-margin-top: 20px;
 		border-radius: 24px;
 		padding: 20px;
 		background: var(--md-sys-color-surface-container);
