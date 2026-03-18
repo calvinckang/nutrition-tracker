@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { initTheme } from '$lib/theme';
+	import { initScrollAboveKeyboard } from '$lib/scrollAboveKeyboard';
 
 	// Material Web components used in layout
 	import '@material/web/button/filled-button.js';
@@ -11,6 +12,8 @@
 
 	onMount(() => {
 		initTheme();
+		const teardown = initScrollAboveKeyboard();
+		return teardown;
 	});
 
 	const navItems = [

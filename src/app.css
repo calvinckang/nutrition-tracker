@@ -82,6 +82,15 @@ md-outlined-button {
 	padding-right: 16px;
 }
 
+/* Keep inputs visible above mobile keyboard (20px gap) */
+md-filled-text-field,
+md-filled-select,
+input,
+textarea,
+select {
+	scroll-margin-bottom: 20px;
+}
+
 /* Global colors for filled inputs (text field + select) */
 [data-theme='light'] md-filled-text-field,
 [data-theme='light'] md-filled-select {
