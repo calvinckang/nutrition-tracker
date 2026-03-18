@@ -19,7 +19,7 @@ function getScrollTarget(el: EventTarget | null): Element | null {
 
 function scrollInputIntoView(el: Element): void {
 	// block: 'center' keeps input in the visible area above the keyboard
-	el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' });
+	el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
 }
 
 function scheduleScrollAttempts(el: Element): () => void {
