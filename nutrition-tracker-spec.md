@@ -1,11 +1,11 @@
 ## Nutrimaxxing – Product & Data Spec
 
-Nutrimaxxing is a nutrition tracker that calculates calories and macronutrients for your meals based on ingredient weights and food labels. The app displays total daily intake by totaling all meals logged throughout the day and provides a weekly view to track nutrition over time.
+Nutrimaxxing is a nutrition tracker that calculates calories and macronutrients for your meals based on ingredient weights and food labels. The app displays total daily intake by totaling all meals logged throughout the day, and provides a History view to browse past meals and nutrition over time.
 
 ### 1. Overview
 
 - **Platform**: Mobile-first web app, built as a **Progressive Web App (PWA)**.
-- **Framework**: **SvelteKit** frontend.
+- **Framework**: **SvelteKit** frontend (Svelte 5).
 - **Backend**: **Neon** (serverless Postgres) with **Drizzle ORM**.
 - **Auth**: **Better Auth** (email/password).
 - **Email (verification & forgot password)**: **Resend** (env: `RESEND_API_KEY`).
@@ -16,6 +16,7 @@ Nutrimaxxing is a nutrition tracker that calculates calories and macronutrients 
 - **App name**: Use **Nutrimaxxing** as the app name throughout the UI, copy, and technical references (package name, emails, etc.).
 - **Favicon**: Use the **peach emoji** (🍑) as the favicon (implementation: emoji favicon).
 - **Icons**: Use the **Google Material Symbols icon library** (Material Design 3) for all in-app icons. Load via [Google Fonts – Material Symbols](https://developers.google.com/fonts/docs/material_symbols) or use Material Web’s `md-icon` with the same symbol set; keep style (e.g. outlined/rounded) consistent across the app.
+- **Typography**: **TASA Orbiter** as the primary app typeface (loaded via `@fontsource/tasa-orbiter`). **Macondo** (Google Fonts) for display/headings (e.g. auth pages, major headings). Material Web components use the app font stack via `--md-ref-typeface-brand` and `--md-ref-typeface-plain`.
 
 ### 2. Roles & Permissions
 
@@ -120,7 +121,7 @@ Nutrimaxxing is a nutrition tracker that calculates calories and macronutrients 
 - `userId`: string (FK → `users.id`)
 - `date`: string – stored as **ISO date** (`YYYY-MM-DD`) in DB
   - Represents the log date (no time-of-day semantics for now).
-  - In UI, always formatted as `DD Month YYYY` (e.g. `"10 March 2026"`).
+  - In UI, formatted as `DD Mon YYYY` (e.g. `10 Mar 2026`) via `toLocaleDateString` with `month: 'short'`.
 - `name?`: string | null
   - Input is **empty by default**.
   - If empty or whitespace on submit, store as `null` or empty string.
@@ -130,11 +131,10 @@ Nutrimaxxing is a nutrition tracker that calculates calories and macronutrients 
 **Meal date selection UX**:
 
 - On the meal log form:
-  - Date field is a **select** offering only:
-    - `Today` (default)
-    - `Yesterday`
+  - **MVP implementation**: The create-meal form defaults to **Today** only (no date select in UI). Backend supports both `today` and `yesterday`; the form passes `day` as hidden input.
+  - **Optional enhancement**: Add a date **select** offering `Today` (default) | `Yesterday`
   - Internally resolved to the correct `YYYY-MM-DD` value based on the user’s current local date.
-  - UI display uses `DD Month YYYY`.
+  - UI display uses `DD Mon YYYY` (e.g. `10 Mar 2026`).
 
 **MealItem (conceptual type)**:
 
@@ -208,7 +208,7 @@ For a given `MealItem`:
   - Installable on mobile home screens.
   - Service worker caches the app shell and static assets.
 - **Offline (MVP)**: **Online-only**. Sign up and sign in require a data connection. Creating or editing meals and meal items also requires a connection; if the user is offline, show feedback (e.g. “You’re offline”) and do not allow saving. Offline-capable meal logging is a future enhancement.
-- **Typography**: Use **TASA Orbiter** as the primary app typeface. Load via a web font provider (e.g. CDN-hosted `@fontsource/tasa-orbiter`) and apply it as the default font family for all app text, layered on top of the base Material Design 3 typography system.
+- **Typography**: See §1 Overview. TASA Orbiter is the primary typeface; Macondo is used for display/headings.
 - **Delete confirmations**: Before deleting a food entry, meal, or meal item, show a **confirmation dialog** (e.g. “Delete this meal?” with Cancel / Delete). Use M3 dialog.
 - **Food catalog list (MVP)**: Use a **simple scrollable list** for the Foods screen; no search or filter in the first version.
 
@@ -257,8 +257,8 @@ For a given `MealItem`:
 - Internally / in database:
   - Use a `date` column (or `YYYY-MM-DD` string).
 - In the UI:
-  - Always render dates as **DD Month YYYY**, e.g. `"10 March 2026"`.
-  - Date values shown to the user are derived from the stored date via a formatting utility.
+  - Render dates as **DD Mon YYYY** (e.g. `10 Mar 2026`), using `toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })`.
+  - Date values are derived from the stored date via a formatting utility (e.g. `toLocaleDateString` with `en-GB`).
 
 #### 5.6 Numeric precision and display
 
@@ -289,7 +289,7 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
 **Empty states**
 
 - **No meals today**: “Nothing logged yet today.” + CTA “Add a meal”
-- **No meals this week (History)**: “No meals this week.” + CTA “Log a meal” (optional)
+- **No meals yet (History)**: “No meals yet.” + CTA “Log a meal” (optional)
 - **No foods in catalog**: “No foods in the list yet.” + CTA “Add a food” (admin); for non-admin, adjust as needed (e.g. “No foods in the list yet.”)
 
 **Feedback (snackbar / short)**
@@ -302,7 +302,7 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
 **Confirmation dialogs**
 
 - **Delete meal**: Title “Delete this meal?” / Body “You can’t undo this.” / Actions “Cancel” | “Delete”
-- **Delete food entry**: Title “Delete this food?” / Body “You can’t undo this. It will stay removed from past meals too.” / Actions “Cancel” | “Delete”
+- **Delete food entry**: Title “Delete this food?” / Body “You can’t undo this. It will be removed from past meals too.” / Actions “Cancel” | “Delete”
 - **Delete meal item**: Title “Remove this item?” / Body “You can’t undo this.” / Actions “Cancel” | “Remove”
 
 **Auth**
@@ -360,22 +360,22 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
   - Provide the theme selection UI **only** in the **Settings** screen (see §9). Do **not** show a global theme toggle on every page.
   - Options: “System default” | “Light” | “Dark” (e.g. as a submenu or select).
 
-### 9. Screen & Component Structure (First Draft)
+### 9. Screen & Component Structure
 
 - **Global layout**:
-  - **Top app bar**: **Only** the app title (h1). No icon; no theme toggle or sign-out on the bar. Keep the top bar minimal.
-  - **Bottom navigation bar** for primary destinations: Today, History, Foods, Settings (Settings is the 4th item).
+  - **Bottom navigation bar** for primary destinations: Today, History, Foods, Settings (4th item). No global top app bar with app title—each page has its own header.
   - Main content in the middle, sized for mobile first.
 - **Today screen**:
-  - Header with current day (formatted as **DD Month YYYY**) and total calories.
-  - Summary card using `md-outlined-card` showing macro totals (Protein, Carbs, Fat).
-  - For each meal:
-    - One `md-outlined-card` per meal.
-    - Inside, a `md-list` of `md-list-item` rows for each meal item (food name, amount + unit, kcal).
-  - A floating action button (`md-fab`) to add a new meal (or open a dialog/bottom sheet).
-- **History / week view**:
-  - **Current week** only: **Monday–Sunday**.
-  - Per day: show **calories + macros** (e.g. protein, carbs, fat).
+  - Header: "Today" + current date (e.g. **DD Mon YYYY**).
+  - Summary section showing daily macro totals (Calories, Protein, Carbs, Sugars, Fat, Saturated, Fiber, Salt).
+  - Meals section with "Add meal" form (meal name optional, default "Meal"). Each meal: header with name + delete, list of items (food + amount + unit), add-item form with food picker (searchable) and amount input.
+  - Confirmation dialog before deleting a meal.
+- **History**:
+  - **Chronological history** (newest first). Initial load shows the most recent ~7 days that have meals. "Load more" button fetches older 7-day chunks. Not limited to current week.
+  - Per day: date, total calories; expandable or list of meals with full macro breakdown (Protein, Carbs, Sugars, Fat, Saturated, Fiber, Salt).
+  - Empty state: "No meals yet."
+- **Foods screen**:
+  - Simple scrollable list of food entries (name, brand, serving, kcal). Admin sees edit/delete actions; non-admin views read-only. "Add a food" CTA for admin. No search/filter in MVP.
 - **Settings screen**:
   - Contains **Theme** and **Sign out** only for MVP.
   - **Theme**: Opens a submenu or control to choose **Light**, **Dark**, or **System** (see §8). Implement with a Material Web select or list. Theme is changed **only** here.
@@ -383,6 +383,8 @@ Applies to nutrient values and amounts (e.g. serving amount, meal item amount).
   - Optional later: show signed-in email, “About” or version.
 
 ### 10. Build Plan (Stages)
+
+**Current status**: MVP complete. Stages 1–4 are implemented. The app is deployable and usable end-to-end (Today, History, Foods, Settings, auth, theme).
 
 Build in this order. Deploy at multiple checkpoints (not only at the end).
 
@@ -399,8 +401,8 @@ Build in this order. Deploy at multiple checkpoints (not only at the end).
 **Build sub-stages (implementation order: 4a → 4b → 4c → 4d)**:
 
 - **4a** – Food catalog (admin CRUD for food entries).
-- **4b** – Today + meal log (meals, items, date Today/Yesterday, totals).
-- **4c** – History / week view.
+- **4b** – Today + meal log (meals, items, totals; date defaults to Today).
+- **4c** – History (chronological, load more).
 - **4d** – Settings (theme in Account, etc.).
 
 **Deployment checkpoints** (deploy multiple times):
@@ -413,7 +415,7 @@ Build in this order. Deploy at multiple checkpoints (not only at the end).
 | **3. Auth**              | Sign up, sign in, sign out, protected routes     | Validate Better Auth, secrets, and DB in production.     |
 | **4a. Food catalog**     | Admin can add/edit/delete food entries           | Start populating the catalog in prod.                    |
 | **4b. Today + meal log** | Full core flow: log meals, add items, see totals | Main MVP; app is usable end-to-end.                      |
-| **4c. History**          | Week view / history                              | Feature-complete for MVP.                                |
+| **4c. History**          | Chronological history with load more             | Feature-complete for MVP.                                |
 | **4d. Settings**         | Theme + account settings                         | Polish and final MVP.                                    |
 | **5. Deploy (final)**    | Optional: motion, performance, SEO               | Last pass before v1.                                     |
 

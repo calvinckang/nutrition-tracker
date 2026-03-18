@@ -286,11 +286,6 @@
 		font-size: var(--md-sys-typescale-title-medium-size, 1.125rem);
 		font-weight: 600;
 	}
-	.meal-calories {
-		margin: 0;
-		font-size: 0.9rem;
-		font-weight: 500;
-	}
 	.load-more-wrap {
 		width: 100%;
 	}

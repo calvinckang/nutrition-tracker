@@ -466,11 +466,6 @@
 		border-radius: 24px;
 		background: color-mix(in srgb, var(--md-sys-color-surface-container), transparent 0%);
 	}
-	.totals-row {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 8px;
-	}
 	.totals-label {
 		font-size: 0.8rem;
 	}
@@ -522,20 +517,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 24px;
-	}
-	.link-button {
-		border: none;
-		padding: 0;
-		background: none;
-		color: var(--md-sys-color-primary);
-		font-size: 0.9rem;
-		cursor: pointer;
-	}
-	.link-button.danger {
-		color: var(--md-sys-color-error);
-	}
-	.link-button.small {
-		font-size: 0.8rem;
 	}
 	.empty-state {
 		display: flex;
@@ -629,9 +610,6 @@
 		gap: 4px;
 		font-size: 0.8rem;
 		color: var(--md-sys-color-on-surface-variant);
-	}
-	.amount-unit {
-		margin-left: 4px;
 	}
 	.food-name-input {
 		width: 100%;
