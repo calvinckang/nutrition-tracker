@@ -1,6 +1,5 @@
 /**
- * Keeps focused inputs visible above the mobile keyboard by scrolling them into view
- * with a configurable padding above the keyboard (via scroll-margin-bottom in CSS).
+ * Keeps focused inputs visible above the mobile keyboard by scrolling them into view.
  *
  * Uses scrollIntoView + repeated delays because iOS Safari's keyboard animates slowly
  * and the visualViewport resize event can be unreliable.
@@ -19,9 +18,8 @@ function getScrollTarget(el: EventTarget | null): Element | null {
 }
 
 function scrollInputIntoView(el: Element): void {
-	// scroll-margin-bottom: 20px (in app.css) adds gap above keyboard
 	// block: 'center' keeps input in the visible area above the keyboard
-	el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
+	el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' });
 }
 
 function scheduleScrollAttempts(el: Element): () => void {
