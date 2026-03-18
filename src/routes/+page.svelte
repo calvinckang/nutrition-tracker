@@ -528,9 +528,9 @@
 		gap: 16px;
 	}
 	.empty-state-icon {
-		font-size: 64px;
-		color: var(--md-sys-color-on-surface-variant);
-		opacity: 0.5;
+		font-size: 48px;
+		color: var(--md-sys-color-primary);
+		opacity: 0.3;
 	}
 	.empty-text,
 	.meal-empty {
