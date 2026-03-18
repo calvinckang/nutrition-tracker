@@ -1,9 +1,12 @@
 /**
  * Keeps focused inputs visible above the mobile keyboard by scrolling them into view
- * with a configurable padding above the keyboard.
+ * with a configurable padding above the keyboard (via scroll-margin-bottom in CSS).
+ *
+ * Uses scrollIntoView + repeated delays because iOS Safari's keyboard animates slowly
+ * and the visualViewport resize event can be unreliable.
  */
 
-const PADDING_BOTTOM = 20;
+const DELAYS_MS = [100, 300, 500, 700, 1000];
 
 function getScrollTarget(el: EventTarget | null): Element | null {
 	if (!el || !(el instanceof Element)) return null;
@@ -15,22 +18,18 @@ function getScrollTarget(el: EventTarget | null): Element | null {
 	return el;
 }
 
-function scrollInputAboveKeyboard(el: Element, paddingBottom: number): void {
-	const vv = window.visualViewport;
-	const rect = el.getBoundingClientRect();
-	const visibleBottom = vv.height - paddingBottom;
+function scrollInputIntoView(el: Element): void {
+	// scroll-margin-bottom: 20px (in app.css) adds gap above keyboard
+	// block: 'center' keeps input in the visible area above the keyboard
+	el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
+}
 
-	if (rect.bottom <= visibleBottom) return;
-
-	const scrollContainer =
-		document.querySelector<HTMLElement>('.main-content') ??
-		(document.scrollingElement as HTMLElement) ??
-		document.documentElement;
-
-	if (!scrollContainer) return;
-
-	const scrollDelta = rect.bottom - visibleBottom;
-	scrollContainer.scrollTop += scrollDelta;
+function scheduleScrollAttempts(el: Element): () => void {
+	const timeouts: ReturnType<typeof setTimeout>[] = [];
+	for (const ms of DELAYS_MS) {
+		timeouts.push(setTimeout(() => scrollInputIntoView(el), ms));
+	}
+	return () => timeouts.forEach((t) => clearTimeout(t));
 }
 
 function handleInputFocus(e: FocusEvent): void {
@@ -50,24 +49,25 @@ function handleInputFocus(e: FocusEvent): void {
 
 	const el = isMaterialField ? target : (target.closest('md-filled-text-field, md-filled-select') as Element ?? target);
 
-	const onResize = (): void => {
+	const onViewportChange = (): void => {
 		if (document.activeElement && el.contains(document.activeElement)) {
-			scrollInputAboveKeyboard(el, PADDING_BOTTOM);
+			scrollInputIntoView(el);
 		}
 	};
 
 	const onBlur = (): void => {
-		window.visualViewport.removeEventListener('resize', onResize);
+		window.visualViewport.removeEventListener('resize', onViewportChange);
+		window.visualViewport.removeEventListener('scroll', onViewportChange);
 	};
 
-	// Delay to allow keyboard animation to start
-	const timeoutId = setTimeout(() => scrollInputAboveKeyboard(el, PADDING_BOTTOM), 300);
+	const cancelScheduled = scheduleScrollAttempts(el);
+	window.visualViewport.addEventListener('resize', onViewportChange);
+	window.visualViewport.addEventListener('scroll', onViewportChange);
 
-	window.visualViewport.addEventListener('resize', onResize);
 	document.addEventListener(
 		'focusout',
-		(e) => {
-			clearTimeout(timeoutId);
+		() => {
+			cancelScheduled();
 			onBlur();
 		},
 		{ once: true }
